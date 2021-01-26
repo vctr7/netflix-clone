@@ -1,0 +1,92 @@
+.SigninWrapper{
+    background-color: none;
+    /* height: 800px; */
+}
+
+.SigninBox {
+    padding-left: 68px;
+    padding-right: 68px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    background-color: black;
+    margin: auto;
+    height: 560px;
+    width: 314px;
+    border-radius: 3px;
+}
+
+h1 {
+    color: white;
+    margin-bottom: 28px;
+}
+.Id {
+    padding-bottom: 16px;
+}
+.Password {
+    padding-bottom: 16px;
+}
+.Incorrect {
+    color: #E77B04;
+    font-size: smaller;
+    margin-top: 5px;
+}
+.IncorrectInput {
+    background-color: #333333;
+    border: none;
+    border-bottom: solid 2px #E77B04;
+    outline: none;
+    width: 296px;
+    height: 50px;
+    border-radius: 5px;
+    padding-left: 18px;
+    font-size: 1rem;
+    color: white;
+    text-align: start;
+}
+.CorrectInput {
+    background-color: #333333;
+    border: none;
+    outline: none;
+    width: 296px;
+    height: 50px;
+    border-radius: 5px;
+    padding-left: 18px;
+    font-size: 1rem;
+    color: white;
+    text-align: start;
+}
+
+input ::placeholder {
+    /* padding-left: 18px; */
+    color: white;
+    opacity: 50%;
+}
+::-webkit-input-placeholder {
+    /* padding-left: 18px; */
+    color: white;
+    opacity: 50%;
+}
+
+::-moz-placeholder {
+    padding-left: 18px;
+    color: white;
+    opacity: 50%;
+}
+
+.SigninButton {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    text-align: center;
+    /* background-color: #e50914; */
+}
+.SigninButton button {
+    cursor: pointer;
+    width: 314px;
+    height: 50px;
+    border-radius: 4px;
+    border: none;
+    background-color: #e50914;
+    color: white;
+    font-size: medium;
+    font-weight: bold;
+}

@@ -1,15 +1,21 @@
 import React from 'react';
-import logo from '../img/logo.png';
+import netflixLogo from '../img/logo.png';
 import './Header.css';
+import { Link } from 'react-router-dom';
+
 
 const Header = () => {
     return (
         <div className="Header">
             <div className="HeaderContents">
-                <img src={logo} width="166px" />
-                <div className="Button">
-                    <button>Sign In</button>
-                </div>
+                <Link to="/">
+                    <img src={netflixLogo} width="166px" />
+                </Link>
+                <Link to="/login">
+                    <div className="Button">
+                        <button>Sign In</button>
+                    </div>
+                </Link>
             </div>
         </div>
     );

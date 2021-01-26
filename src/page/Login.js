@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Header from '../component/Header';
+import Signin from '../component/Signin';
+import Footer from '../component/Footer';
+import './Login.css';
 
-class Login extends Component {
-    render() {
-        return (
-            <div>
-                
+function Login() {
+    return (
+        <>
+            <div className="LoginPage">
+                <Header />
+                <Signin className="Signin" />
+                <Footer/>
             </div>
-        );
-    }
+        </>
+    );
 }
 
 export default Login;
