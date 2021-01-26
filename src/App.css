@@ -1,0 +1,63 @@
+.Home {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: linear-gradient(
+            to top,
+            rgba(20, 20, 20, 0.905) 10%,
+            rgba(20, 20, 20, 0.75) 25%,
+            rgba(20, 20, 20, 0.5) 50%,
+            rgba(20, 20, 20, 0.75) 75%,
+            rgba(20, 20, 20, 1) 100%
+        ),
+        url(./img/main.jpg);
+    background-size: 100%;
+}
+.Text {
+    /* position: absolute; */
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+    padding-top: 165px;
+    padding-bottom: 165px;
+    /* top: 300px; */
+    max-width: 800px;
+}
+
+.Text h1 {
+    font-size: 50pt;
+    margin: 0;
+}
+.Text h2 {
+    font-size: 1.625rem;
+    font-weight: normal;
+}
+.EmailForm {
+}
+.EmailTitle {
+    font-weight: normal;
+}
+.EmailInput {
+    display: flex;
+}
+.EmailForm input {
+    width: 500px;
+    height: 65px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid orange;
+}
+.EmailForm button {
+    background-color: #e50914;
+    color: white;
+    height: 70px;
+    width: 300px;
+    border: none;
+    cursor: pointer;
+    font-size: 22pt;
+}
+
+hr{
+    border: solid 4px grey;
+    opacity:30%
+}
