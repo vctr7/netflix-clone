@@ -1,10 +1,11 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 import Header from './component/Header';
 
 import Login from './page/Login';
+import Register from './page/Register';
 
 function App() {
     const [email, setEmail] = useState('');
@@ -52,7 +53,8 @@ function App() {
                                         setEmail(e.target.value);
                                     }}
                                 ></input>
-                                <button onClick={onClick()}>
+                                <Link to="/register">
+                                <button>
                                     GET STARTED&nbsp;&nbsp;
                                     <svg
                                         viewBox="0 0 6 12"
@@ -67,6 +69,7 @@ function App() {
                                         ></path>
                                     </svg>
                                 </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -74,6 +77,7 @@ function App() {
                 </div>
             </Route>
             <Route path="/login" render={() => <Login />} />
+            <Route path="/register" render={() => <Register email={email}/>} />
         </div>
     );
 }

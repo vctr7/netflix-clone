@@ -1,4 +1,3 @@
-import { withTheme } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Signin.css';
@@ -9,6 +8,7 @@ const Signin = () => {
     const [password, setPassword] = useState('');
     const [isAccount, setIsAccount] = useState(false);
     const [isPassword, setIsPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState('password');
 
     useEffect(() => {
         if (account.length > 4) setIsAccount(true);
@@ -19,10 +19,6 @@ const Signin = () => {
         if (password.length > 4 && password.length <= 60) setIsPassword(true);
         else setIsPassword(false);
     }, [password]);
-
-    const style = {
-        color: 'white',
-    };
 
     return (
         <div className="SigninWrapper">
@@ -35,7 +31,7 @@ const Signin = () => {
                     {isAccount ? (
                         <div className="Id">
                             <input
-                                className="CorrectInput"
+                                className="CorrectInputId"
                                 placeholder="Email or phone number"
                                 value={account}
                                 onChange={(e) => setAccount(e.target.value)}
@@ -58,18 +54,30 @@ const Signin = () => {
                     )}
 
                     {isPassword ? (
-                        <div className="Password">
+                        <div className="Password" style={{ display: 'flex' }}>
                             <input
-                                className="CorrectInput"
+                                className="CorrectInputPassword"
+                                type={showPassword}
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             ></input>
+                            <div
+                                style={{ zIndex: '2', color: '#898989', fontSize:"10pt",height:'35px',cursor:"pointer", paddingTop:"17px", paddingRight:"13px",backgroundColor:"#454545", borderRadius: "0px 5px 5px 0px"}}
+                                onClick={() => {
+                                    if (showPassword === 'password')
+                                        setShowPassword('text');
+                                    else setShowPassword('password');
+                                }}
+                            >
+                                {showPassword === 'password' ? 'SHOW' : 'HIDE'}
+                            </div>
                         </div>
                     ) : (
                         <div className="Password">
                             <input
                                 className="IncorrectInput"
+                                type="password"
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
