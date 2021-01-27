@@ -1,5 +1,8 @@
+import { withTheme } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Signin.css';
+import fblogo from '../img/fb.png';
 
 const Signin = () => {
     const [account, setAccount] = useState('');
@@ -17,11 +20,17 @@ const Signin = () => {
         else setIsPassword(false);
     }, [password]);
 
+    const style = {
+        color: 'white',
+    };
+
     return (
         <div className="SigninWrapper">
             <div className="SigninBox">
                 <div className="SigninFormMain">
-                    <h1 color="white">Sign In</h1>
+                    <h1 style={{ color: 'white', marginBottom: '28px' }}>
+                        Sign In
+                    </h1>
 
                     {isAccount ? (
                         <div className="Id">
@@ -76,11 +85,31 @@ const Signin = () => {
                         <button>Sign In</button>
                     </div>
                 </div>
-                <div className="SigninFormOther">
-
+                <div
+                    style={{
+                        width: '217px',
+                        height: '314px',
+                        color: '#737373',
+                    }}
+                >
+                    <div
+                        className="LoginWithFacebook"
+                        style={{ display: 'flex', marginTop: '20px' }}
+                    >
+                        <img src={fblogo} width="16px"></img>
+                        &nbsp;
+                        <div>Login with Facebook</div>
+                    </div>
+                    <div style={{ display: 'flex', marginTop: '20px' }}>
+                        <div>New to Netflix?</div>
+                        &nbsp;
+                        <Link to="/">
+                            <div style={{ color: 'white' }}>Sign up now</div>
+                        </Link>
+                    </div>
+                    <div className="CAPTCHA"></div>
                 </div>
             </div>
-            
         </div>
     );
 };
