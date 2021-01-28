@@ -1,0 +1,14 @@
+.LoginPage {
+    min-height: 100vh;
+    background: linear-gradient(
+            to top,
+            rgba(20, 20, 20, 0.5) 10%,
+            rgba(20, 20, 20, 0.5) 25%,
+            rgba(20, 20, 20, 0.5) 50%,
+            rgba(20, 20, 20, 0.5) 75%,
+            rgba(20, 20, 20, 0.9) 100%
+        ),
+        url(../img/main.jpg);
+    background-size: 100% 90%;
+    background-repeat: no-repeat;
+}
