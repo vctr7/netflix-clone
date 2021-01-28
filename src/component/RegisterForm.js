@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import registerimg from '../img/register.png';
 import checkimg from '../img/check.png';
+import secureimg from '../img/secure.png';
 import './RegisterForm.css';
 
 const RegisterForm = ({ email }) => {
@@ -47,13 +48,13 @@ const RegisterForm = ({ email }) => {
                             {`STEP ${String(step)} OF 5`}
                         </div>
                         <div className="StepTitle">
-                            <h1 style={{ fontSize: '23px' }}>
+                            <h1 style={{ fontSize: '23px', color: '#333333' }}>
                                 Finish setting up your account.
                             </h1>
                         </div>
                         <div
                             className="StepContext"
-                            style={{ fontSize: '17px' }}
+                            style={{ fontSize: '17px', color: '#333333' }}
                         >
                             Netflix is personalized for you. Create a password
                             to watch Netflix on any device at any time.
@@ -88,14 +89,14 @@ const RegisterForm = ({ email }) => {
                             {`STEP ${String(step)} OF 5`}
                         </div>
                         <div>
-                            <h1 style={{ fontSize: '23px' }}>
+                            <h1 style={{ fontSize: '23px', color: '#333333' }}>
                                 Create a password to start your membership.
                             </h1>
                         </div>
-                        <div style={{ fontSize: '19px' }}>
+                        <div style={{ fontSize: '19px', color: '#333333' }}>
                             Just a few more steps and you're done!
                         </div>
-                        <div style={{ fontSize: '19px' }}>
+                        <div style={{ fontSize: '19px', color: '#333333' }}>
                             We hate paperwork, too.
                         </div>
 
@@ -145,7 +146,7 @@ const RegisterForm = ({ email }) => {
                             {`STEP ${String(step)} OF 5`}
                         </div>
                         <div>
-                            <h1 style={{ fontSize: '23px' }}>
+                            <h1 style={{ fontSize: '23px', color: '#333333' }}>
                                 Choose your plan.
                             </h1>
                         </div>
@@ -173,7 +174,7 @@ const RegisterForm = ({ email }) => {
                                 <div
                                     width="266px"
                                     height="42px"
-                                    style={{ paddingLeft: '10px' }}
+                                    style={{ paddingLeft: '10px' , color: '#333333'}}
                                 >
                                     You won't be charged until after your free
                                     month.
@@ -200,7 +201,7 @@ const RegisterForm = ({ email }) => {
                                 <div
                                     width="266px"
                                     height="42px"
-                                    style={{ paddingLeft: '10px' }}
+                                    style={{ paddingLeft: '10px' , color: '#333333'}}
                                 >
                                     We'll remind you three days before your
                                     trial ends.
@@ -227,7 +228,7 @@ const RegisterForm = ({ email }) => {
                                 <div
                                     width="266px"
                                     height="42px"
-                                    style={{ paddingLeft: '10px' }}
+                                    style={{ paddingLeft: '10px', color: '#333333' }}
                                 >
                                     No commitments, cancel anytime.
                                 </div>
@@ -267,10 +268,10 @@ const RegisterForm = ({ email }) => {
                             {`STEP ${String(step)} OF 5`}
                         </div>
 
-                        <div style={{ fontSize: '23px', fontWeight: '600' }}>
+                        <div style={{ fontSize: '23px', fontWeight: '600' , color: '#333333'}}>
                             Choose the plan that’s right for you
                         </div>
-                        <div style={{ fontSize: '16px' }}>
+                        <div style={{ fontSize: '16px' , color: '#333333'}}>
                             Downgrade or upgrade at any time.
                         </div>
                         {/* redbox */}
@@ -1173,6 +1174,24 @@ const RegisterForm = ({ email }) => {
                     </div>
                 );
 
+            case 5:
+                return (
+                    <div className="RegisterForm">
+                        <img src={secureimg} width="50px"></img>
+                        <div
+                            className="StepIndicator"
+                            style={{ fontSize: '13px', marginTop: '20px' }}
+                        >
+                            {`STEP ${String(step)} OF 5`}
+                        </div>
+                        <div>
+                            <h1 style={{ fontSize: '23px', color: '#333333' }}>
+                                Set up your payment.
+                            </h1>
+                        </div>
+                        
+                    </div>
+                );
             default:
                 return;
         }

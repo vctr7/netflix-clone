@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Route, Link } from 'react-router-dom';
 
 import Header from './component/Header';
+import Footer from './component/Footer';
 
 import Login from './page/Login';
 import Register from './page/Register';
 
 function App() {
     const [email, setEmail] = useState('');
-
+    const [lever, setLever] = useState(false);
     // useEffect(() => {}, [email]);
 
     const onClick = () => {};
@@ -47,37 +48,74 @@ function App() {
                                 style={{ display: 'flex' }}
                             >
                                 <input
+                                    style={{ width:"505px", borderRadius:'1px 0 0 1px'}}
                                     placeholder="Email address"
                                     value={email}
                                     onChange={(e) => {
                                         setEmail(e.target.value);
                                     }}
-                                ></input>
-                                <Link to="/register">
-                                <button>
-                                    GET STARTED&nbsp;&nbsp;
-                                    <svg
-                                        viewBox="0 0 6 12"
-                                        width="10px"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <desc>chevron</desc>
-                                        <path
-                                            d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
-                                            fill="white"
-                                            fill-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </button>
-                                </Link>
+                                />
+                                {email.length > 4 ? (
+                                    <Link to="/register">
+                                        <button style={{borderRadius:"0 2px 2px 0", width:"289px"}}>
+                                            GET STARTED&nbsp;&nbsp;
+                                            <svg
+                                                viewBox="0 0 6 12"
+                                                width="10px"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <desc>chevron</desc>
+                                                <path
+                                                    d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
+                                                    fill="white"
+                                                    fill-rule="evenodd"
+                                                ></path>
+                                            </svg>
+                                        </button>
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <button style={{borderRadius:"0 2px 2px 0", width:"294px"}} onClick={()=>setLever(true)}>
+                                            GET STARTED&nbsp;&nbsp;
+                                            <svg
+                                                viewBox="0 0 6 12"
+                                                width="10px"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <desc>chevron</desc>
+                                                <path
+                                                    d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
+                                                    fill="white"
+                                                    fill-rule="evenodd"
+                                                ></path>
+                                            </svg>
+                                        </button>
+                                    </>
+                                )}
                             </div>
+                            {email.length <= 4 && lever ? (
+                                <div
+                                    style={{
+                                        color: '#E77B04',
+                                        marginTop: '5px',
+                                        float: 'left',
+                                    }}
+                                >
+                                    Email is required!
+                                </div>
+                            ) : null}
                         </div>
+                        
+                        <Footer style={{marginTop:'200px'}}></Footer>
                     </div>
-                    <hr style={{ border: 'solid 4px grey', opacity: '30%' }} />
+                    {/* <hr style={{ border: 'solid 4px grey', opacity: '30%' }} /> */}
+                    
+                    
                 </div>
+                
             </Route>
             <Route path="/login" render={() => <Login />} />
-            <Route path="/register" render={() => <Register email={email}/>} />
+            <Route path="/register" render={() => <Register email={email} />} />
         </div>
     );
 }

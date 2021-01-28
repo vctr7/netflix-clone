@@ -8,7 +8,7 @@ const Header = ({ path }) => {
         <div className="Header">
             <div className="HeaderContents">
                 <Link to="/">
-                    <img src={netflixLogo} width="166px" />
+                    <img src={netflixLogo} width="166px" draggable="false" />
                 </Link>
                 {path === '/' ? (
                     <Link to="/login">
