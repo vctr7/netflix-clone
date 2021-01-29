@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import registerimg from '../img/register.png';
 import checkimg from '../img/check.png';
 import secureimg from '../img/secure.png';
 import cardimg from '../img/card.png';
 import chevronimg from '../img/chevronright.png';
 import './RegisterForm.css';
+import axios from 'axios';
 
-const RegisterForm = ({ email }) => {
+const RegisterForm = ({ email, signalListener }) => {
     const [step, setStep] = useState(1);
     const [registerEmail, setRegisterEmail] = useState(email);
     const [registerPassword, setRegisterPassword] = useState('');
@@ -21,6 +23,13 @@ const RegisterForm = ({ email }) => {
     const [creditCardNumber, setCreditCardNumber] = useState('');
     const [creditExpirationDate, setCreditExpirationDate] = useState('');
     const [creditCVV, setCreditCVV] = useState('');
+
+    const [isRegister, setIsRegister] = useState(false);
+    useEffect(() => {
+        if (isRegister) {
+            console.log('update');
+        }
+    }, [isRegister]);
 
     const selectBasic = () => {
         setIsBasic(true);
@@ -37,8 +46,15 @@ const RegisterForm = ({ email }) => {
         setIsStandard(false);
         setIsPremium(true);
     };
+    const getPlanStatus = () => {
+        if (isBasic) return 'Basic';
+        else if (isStandard) return 'Standard';
+        else if (isPremium) return 'Premium';
+    };
 
     const submitRegisteration = () => {
+        const currPlan = getPlanStatus();
+        console.log(currPlan)
         const creditInfo = {
             firstName: creditFirstName,
             lastName: creditLastName,
@@ -50,13 +66,15 @@ const RegisterForm = ({ email }) => {
         const personalInfo = {
             email: registerEmail,
             password: registerPassword,
+            plan: currPlan,
         };
         axios
             .post('api/auth/register', { personalInfo, creditInfo })
             .then((res) => {
                 if (res.status === 200) {
                     console.log('sign up');
-                    getLoginStatus(true);
+                    setIsRegister(true);
+                    signalListener(isRegister);
                 } else {
                     console.log('not error but problem');
                 }
@@ -146,7 +164,14 @@ const RegisterForm = ({ email }) => {
                         ></input>
                         <div style={{ marginTop: '30px' }}>
                             <button
-                                onClick={() => setStep(step + 1)}
+                                onClick={() => {
+                                    if (registerPassword.length > 4)
+                                        setStep(step + 1);
+                                    else
+                                        alert(
+                                            'Password should longer than 4 characters!',
+                                        );
+                                }}
                                 style={{
                                     backgroundColor: '#F6141D',
                                     borderRadius: '2px',
@@ -1421,7 +1446,9 @@ const RegisterForm = ({ email }) => {
                                 placeholder="Card Number"
                                 type="text"
                                 value={creditCardNumber}
-                                onChange={(e) => setCreditCardNumber}
+                                onChange={(e) =>
+                                    setCreditCardNumber(e.target.value)
+                                }
                             />
                             <input
                                 className="RegisterCredit"
@@ -1467,7 +1494,7 @@ const RegisterForm = ({ email }) => {
         }
     };
 
-    return <div>{indicator(step)}</div>;
+    return <div>{isRegister ? <Redirect to="/" /> : indicator(step)}</div>;
 };
 
 export default RegisterForm;

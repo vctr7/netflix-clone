@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: ['babel-polyfill',"./src/index.js"],
   output: {
     path: path.join(__dirname, "/build"),
     filename: "main.js",
@@ -43,11 +43,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
+    
   ],
-  proxy:{
-    '/api':{
-      target: "http://localhost:8795",
-      changeOrigin : true
+  devServer:{
+    proxy:{
+      '/api':{
+        target: "http://localhost:8795",
+        changeOrigin : true
+      }
     }
   }
+  
 };
