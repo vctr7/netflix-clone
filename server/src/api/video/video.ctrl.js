@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import User from '../../models/user';
+import Video from '../../models/video';
 
 export const register = async (ctx) => {
     console.log('register : receive data!');
@@ -85,15 +85,15 @@ export const login = async (ctx) => {
     }
 };
 
-export const check = async (ctx) => {
-    console.log('check : receive data!');
-    const { user } = ctx.state;
-    if (!user) {
-        ctx.status = 401;
-        return;
-    }
-    const userinfo = await User.findByUserEmail(user.userId);
-    ctx.body = userinfo;
+export const home = async (ctx) => {
+    console.log('home : receive data!');
+    // const { user } = ctx.state;
+    // if (!user) {
+    //     ctx.status = 401;
+    //     return;
+    // }
+    const videoinfo = await Video.loadAllData();
+    ctx.body = videoinfo;
 };
 
 export const logout = async (ctx) => {

@@ -29,10 +29,13 @@ function App() {
 
     const loginState = async () => {
         try {
-            await axios.get('/api/auth/check').then((res) => {
-                setUser(res);
-                // console.log(res);
-            });
+            await axios
+                .get('/api/auth/check')
+                .then((res) => {
+                    setUser(res);
+                    // console.log(res);
+                })
+                .catch((err) => console.log(err));
         } catch (error) {
             console.log(error);
         }
@@ -47,11 +50,25 @@ function App() {
             <Route path="/" exact>
                 <div>
                     {user ? (
-                        <div className="Home" style={{ minHeight: '300vh' }}>
-                            <header style={{ position: 'fixed', zIndex: '2', padding:'0'}}>
+                        <div style={{ minHeight: '300vh' }}>
+                            <header
+                                style={{
+                                    position: 'fixed',
+                                    zIndex: '2',
+                                    padding: '0',
+                                }}
+                            >
                                 <Header path="/success" logout={logout} />
                             </header>
-
+                            <video
+                                id="videoPlayer"
+                                width="650"
+                                controls
+                                autoplay 
+                                style={{outline:'none'}}
+                            >
+                                <source src="http://localhost:8888/video"  type="video/mp4" />
+                            </video>
                         </div>
                     ) : (
                         <div className="Home" style={{ minHeight: '100vh' }}>

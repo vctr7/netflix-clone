@@ -37,6 +37,14 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    likedVideo:{
+        type: Object,
+        default: {}
+    },
+    watchedVideo:{
+        type: Object,
+        default: {}
+    }
 });
 
 // Encrypt password
