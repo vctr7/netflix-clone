@@ -48,7 +48,6 @@ function App() {
     return (
         <div>
             <Route path="/" exact>
-                <div>
                     {user ? (
                         <div style={{ minHeight: '300vh' }}>
                             <header
@@ -183,7 +182,6 @@ function App() {
                             </div>
                         </div>
                     )}
-                </div>
             </Route>
             <Route
                 path="/login"
