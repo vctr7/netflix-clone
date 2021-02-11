@@ -6,27 +6,18 @@ const VideoSchema = new Schema({
         type: String
     },
     info:{
-        type: String
-    },
-    uploadDate: {
-        type: Date,
-        default: Date.now,
+        type: Object
     },
     thumbnail:{
-        //img url
         type: String,
         default: 'https://2.bp.blogspot.com/-muVbmju-gkA/Vir94NirTeI/AAAAAAAAT9c/VoHzHZzQmR4/s1600/placeholder-image.jpg'
     },
-    genre:{
-        type: Object,
-        default: {}
-    }
 });
 
 
 // Find video in mongodb
 VideoSchema.statics.loadAllData = function () {
-    return this.find({});
+    return this.find({}).sort({"v_url":1});
 };
 
 

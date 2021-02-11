@@ -16,11 +16,23 @@ function App() {
     const [user, setUser] = useState(null);
     const [signal, setSignal] = useState(null);
 
+    const [videoData, setVideoData] = useState(null);
+
     const logout = () => {
         axios.post('/api/auth/logout');
         setUser(null);
         console.log('log out');
     };
+    const fetchData = async () => {
+        const result = await axios
+            .get('api/video/home')
+            .then((res) => setVideoData(res.data))
+            .catch((err) => console.log(err));
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const signalListener = (data) => {
         console.log(data);
@@ -33,6 +45,13 @@ function App() {
                 .get('/api/auth/check')
                 .then((res) => {
                     setUser(res);
+                    // axios
+                    //     .get("api/video/home")
+                    //     .then((res) => {
+                    //         setVideoData(res.data)
+                    //         // console.log(res.data)
+                    //     })
+                    //     .catch((err) => console.log(err))
                     // console.log(res);
                 })
                 .catch((err) => console.log(err));
@@ -48,18 +67,18 @@ function App() {
     return (
         <div>
             <Route path="/" exact>
-                    {user ? (
-                        <div style={{ minHeight: '300vh' }}>
-                            <header
-                                style={{
-                                    position: 'fixed',
-                                    zIndex: '2',
-                                    padding: '0',
-                                }}
-                            >
-                                <Header path="/success" logout={logout} />
-                            </header>
-                            <video
+                {user ? (
+                    <div style={{ minHeight: '300vh' }}>
+                        <header
+                            style={{
+                                position: 'fixed',
+                                padding: '0',
+                            }}
+                        >
+                            <Header path="/success" logout={logout} />
+                        </header>
+
+                        {/* <video
                                 id="videoPlayer"
                                 width="650"
                                 controls
@@ -67,121 +86,158 @@ function App() {
                                 style={{outline:'none'}}
                             >
                                 <source src="http://localhost:8888/video"  type="video/mp4" />
-                            </video>
-                        </div>
-                    ) : (
-                        <div className="Home" style={{ minHeight: '100vh' }}>
-                            <Header path="/" />
-                            <div className="Text">
-                                <h1
-                                    className="TextTitle"
-                                    style={{ fontSize: '50pt' }}
-                                >
-                                    Unlimited movies, TV shows, and more.
-                                </h1>
-                                <h2
-                                    className="TextSubtitle"
+                            </video> */}
+                        <div>
+                            {videoData ? (
+                                <div
                                     style={{
-                                        fontSize: '1.625rem',
-                                        fontWeight: 'normal',
+                                        paddingTop: '100px',
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(6, 254px)',
+                                        justifyContent: 'center',
                                     }}
                                 >
-                                    Watch anywhere. Cancel anytime.
-                                </h2>
-
-                                <div className="EmailForm">
-                                    <h3
-                                        className="EmailTitle"
-                                        style={{ fontWeight: 'normal' }}
-                                    >
-                                        Ready to watch? Enter your email to
-                                        create or restart your membership.
-                                    </h3>
-                                    <div
-                                        className="EmailInput"
-                                        style={{ display: 'flex' }}
-                                    >
-                                        <input
-                                            style={{
-                                                width: '505px',
-                                                borderRadius: '1px 0 0 1px',
-                                            }}
-                                            placeholder="Email address"
-                                            value={email}
-                                            onChange={(e) => {
-                                                setEmail(e.target.value);
-                                            }}
-                                        />
-                                        {email.length > 4 ? (
-                                            <Link to="/register">
-                                                <button
-                                                    style={{
-                                                        borderRadius:
-                                                            '0 2px 2px 0',
-                                                        width: '289px',
-                                                    }}
-                                                >
-                                                    GET STARTED&nbsp;&nbsp;
-                                                    <svg
-                                                        viewBox="0 0 6 12"
-                                                        width="10px"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <desc>chevron</desc>
-                                                        <path
-                                                            d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
-                                                            fill="white"
-                                                            fill-rule="evenodd"
-                                                        ></path>
-                                                    </svg>
-                                                </button>
-                                            </Link>
-                                        ) : (
-                                            <>
-                                                <button
-                                                    style={{
-                                                        borderRadius:
-                                                            '0 2px 2px 0',
-                                                        width: '294px',
-                                                    }}
-                                                    onClick={() =>
-                                                        setLever(true)
-                                                    }
-                                                >
-                                                    GET STARTED&nbsp;&nbsp;
-                                                    <svg
-                                                        viewBox="0 0 6 12"
-                                                        width="10px"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <desc>chevron</desc>
-                                                        <path
-                                                            d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
-                                                            fill="white"
-                                                            fill-rule="evenodd"
-                                                        ></path>
-                                                    </svg>
-                                                </button>
-                                            </>
-                                        )}
-                                    </div>
-                                    {email.length <= 4 && lever ? (
+                                    {videoData.map((vdata) => (
                                         <div
+                                            className="Item"
                                             style={{
-                                                color: '#E77B04',
-                                                marginTop: '5px',
-                                                float: 'left',
+                                                position: 'relative',
+                                                cursor: 'pointer',
                                             }}
                                         >
-                                            Email is required!
+                                            <img
+                                                style={{
+                                                    objectFit: 'cover',
+                                                    borderRadius: '3px',
+                                                    width: '250px',
+                                                    height: '140px',
+                                                }}
+                                                src={vdata.thumbnail}
+                                            />
+                                            <div
+                                                className="Caption"
+                                            >
+                                                <div>{vdata.info.english_name}</div>
+                                                <div>{vdata.info.director}</div>
+                                                <div>{vdata.info.actors}</div>
+                                            </div>
                                         </div>
-                                    ) : null}
+                                    ))}
                                 </div>
-
-                                <Footer style={{ marginTop: '200px' }}></Footer>
-                            </div>
+                            ) : (
+                                'Loading..'
+                            )}
                         </div>
-                    )}
+                    </div>
+                ) : (
+                    <div className="Home" style={{ minHeight: '100vh' }}>
+                        <Header path="/" />
+                        <div className="Text">
+                            <h1
+                                className="TextTitle"
+                                style={{ fontSize: '50pt' }}
+                            >
+                                Unlimited movies, TV shows, and more.
+                            </h1>
+                            <h2
+                                className="TextSubtitle"
+                                style={{
+                                    fontSize: '1.625rem',
+                                    fontWeight: 'normal',
+                                }}
+                            >
+                                Watch anywhere. Cancel anytime.
+                            </h2>
+
+                            <div className="EmailForm">
+                                <h3
+                                    className="EmailTitle"
+                                    style={{ fontWeight: 'normal' }}
+                                >
+                                    Ready to watch? Enter your email to create
+                                    or restart your membership.
+                                </h3>
+                                <div
+                                    className="EmailInput"
+                                    style={{ display: 'flex' }}
+                                >
+                                    <input
+                                        style={{
+                                            width: '505px',
+                                            borderRadius: '1px 0 0 1px',
+                                        }}
+                                        placeholder="Email address"
+                                        value={email}
+                                        onChange={(e) => {
+                                            setEmail(e.target.value);
+                                        }}
+                                    />
+                                    {email.length > 4 ? (
+                                        <Link to="/register">
+                                            <button
+                                                style={{
+                                                    borderRadius: '0 2px 2px 0',
+                                                    width: '289px',
+                                                }}
+                                            >
+                                                GET STARTED&nbsp;&nbsp;
+                                                <svg
+                                                    viewBox="0 0 6 12"
+                                                    width="10px"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <desc>chevron</desc>
+                                                    <path
+                                                        d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
+                                                        fill="white"
+                                                        fill-rule="evenodd"
+                                                    ></path>
+                                                </svg>
+                                            </button>
+                                        </Link>
+                                    ) : (
+                                        <>
+                                            <button
+                                                style={{
+                                                    borderRadius: '0 2px 2px 0',
+                                                    width: '294px',
+                                                }}
+                                                onClick={() => setLever(true)}
+                                            >
+                                                GET STARTED&nbsp;&nbsp;
+                                                <svg
+                                                    viewBox="0 0 6 12"
+                                                    width="10px"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <desc>chevron</desc>
+                                                    <path
+                                                        d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
+                                                        fill="white"
+                                                        fill-rule="evenodd"
+                                                    ></path>
+                                                </svg>
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
+                                {email.length <= 4 && lever ? (
+                                    <div
+                                        style={{
+                                            color: '#E77B04',
+                                            marginTop: '5px',
+                                            float: 'left',
+                                        }}
+                                    >
+                                        Email is required!
+                                    </div>
+                                ) : null}
+                            </div>
+
+                            <Footer style={{ marginTop: '200px' }}></Footer>
+                        </div>
+                    </div>
+                )}
             </Route>
             <Route
                 path="/login"
