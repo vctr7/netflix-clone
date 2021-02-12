@@ -14,6 +14,18 @@
     background-size: 100%;
     background-repeat: no-repeat;
 }
+.HeaderPlaying {
+    position: fixed;
+    z-index: 10;
+    background: linear-gradient(
+        to top,
+        rgba(20, 20, 20, 0) 10%,
+        rgba(20, 20, 20, 0.25) 25%,
+        rgba(20, 20, 20, 0.5) 50%,
+        rgba(20, 20, 20, 0.75) 75%,
+        rgba(20, 20, 20, 1) 100%
+    );
+}
 .Text {
     /* position: absolute; */
     margin: 0 auto;
@@ -31,9 +43,9 @@
     height: 65px;
     outline: none;
     border: none;
-    border-bottom: 2px solid #E77B04;
+    border-bottom: 2px solid #e77b04;
 }
-.EmailInput input::placeholder{
+.EmailInput input::placeholder {
     color: black;
     opacity: 50%;
     font-size: medium;
@@ -42,34 +54,58 @@
     background-color: #e50914;
     color: white;
     height: 69px;
-    /* width: 300px; */
     border: none;
     cursor: pointer;
     font-size: 22pt;
 }
 
-/* .Caption {
-    top: -500px;
-    z-index: 5;
-    cursor: pointer;
-    background-color: none;
-}
-.Caption:hover {
-    background-color: black;
-    color: white;
-} */
-.Item:hover .Caption{
+.Item:hover .Caption {
     opacity: 1;
     z-index: 3;
-    transition-delay:0.5s;
+    transition-delay: 0.5s;
+    position: absolute;
+    min-width: 380px;
+    min-height: 380px;
+    top: -120px;
+    left: -65px;
+    border-radius: 5px;
+}
+.Caption:hover .CaptionImage {
+    /* position: relative; */
+    width: 380px;
+    min-height: 200px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
 }
 .Caption {
-    top:70px;
+    z-index: 0;
+    top: 0;
+    left: 0;
     opacity: 0;
     position: absolute;
-    background-color:black;
-    width: 300px;
-    height: 300px;
+    background-color: #191919;
+    width: 250px;
+    height: 140px;
     color: #fff;
-    transition: 0.5s;     
+    transition: 0.3s;
+}
+.CaptionImage {
+    width: 0;
+    height: 0;
+}
+
+.InfoButtonHover {
+    position: absolute;
+    opacity: 0;
+    background-color: #e6e6e6;
+    width: 0x;
+    height: 0px;
+}
+.InfoButton:hover .InfoButtonHover {
+    border-radius: 5px;
+    opacity: 1;
+    width: 150px;
+    height: 35px;
+    top: 55px;
+    left: -55px;
 }

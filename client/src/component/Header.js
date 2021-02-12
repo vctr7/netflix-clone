@@ -7,7 +7,7 @@ const Header = ({ path, logout }) => {
     return (
         <div>
             {path === '/success' ? (
-                <div className="Header" style={{backgroundColor:"black", width:"100vw"}}>
+                <div className="Header" style={{ width:"100vw"}}>
                     <div style={{ display: 'flex', margin: '0 56px 18px 56px' }}>
                         <Link to="/">
                             <img
