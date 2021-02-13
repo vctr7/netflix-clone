@@ -9,6 +9,10 @@ import Login from './page/Login';
 import Register from './page/Register';
 import axios from 'axios';
 
+import R from './img/restricted.png';
+import PG from './img/parental_guidance.png';
+import G from './img/general_audience.png';
+
 function App() {
     const [email, setEmail] = useState('');
     const [lever, setLever] = useState(false);
@@ -58,19 +62,25 @@ function App() {
         // console.log(user);
     }, [signal]);
 
-    const stopVideo= () =>{
-        const vid = document.getElementById("videoPlayer");
+    const stopVideo = () => {
+        const vid = document.getElementById('videoPlayer');
         vid.pause();
-    }
+    };
 
     const playVideo = (vdata) => {
         if (turnOn) {
             setTurnOn(false);
             stopVideo();
-        };
+        }
         console.log('PLAY', vdata.v_url);
         setVideoInfo(vdata);
         setTurnOn(true);
+    };
+
+    const getMovieRating = (rating) => {
+        if (rating === 'G') return G;
+        else if (rating === 'R') return R;
+        else return PG;
     };
 
     return (
@@ -90,9 +100,18 @@ function App() {
                                     <Header path="/success" logout={logout} />
                                 </header>
 
-                                <div draggable="false" style={{ textAlign: 'center' }}>
+                                <div
+                                    draggable="false"
+                                    style={{ textAlign: 'center' }}
+                                >
                                     <video
-                                        style={{ outline: 'none', objectFit: "contain", width:'100vw', minHeight:'940px', maxHeight:'940px' }}
+                                        style={{
+                                            outline: 'none',
+                                            objectFit: 'contain',
+                                            width: '100vw',
+                                            minHeight: '940px',
+                                            maxHeight: '940px',
+                                        }}
                                         id="videoPlayer"
                                         controls
                                         autoPlay
@@ -110,32 +129,93 @@ function App() {
                                             top: '400px',
                                             left: '50px',
                                             color: 'white',
-                                            textAlign:'left'
+                                            textAlign: 'left',
                                         }}
                                     >
-                                        {videoInfo.title==="x" ? <><div draggable="false" style={{fontSize:"40pt"}}>{videoInfo.info.english_name}</div>
-                                        {videoInfo.info.language==='English'? null: (<div  style={{fontSize:"20pt", margin:"0"}}>{videoInfo.info.original_name}</div>)}</>: <img draggable="false" width="500px" src={videoInfo.title}></img>}
-                                        
-                                        
-                                        
-                                        <div style={{marginTop:"20px", display:"flex"}}>
-                                        
-                                            <div >{videoInfo.info.year}</div>
-                                            <div >&nbsp;|&nbsp; </div>
-                                            <div>{videoInfo.info.age}</div>
-                                            <div >&nbsp;|&nbsp; </div>
-                                            <div >{`${parseInt(videoInfo.info.duration/60)}h ${videoInfo.info.duration%60}m`}</div>
+                                        {videoInfo.title === 'x' ? (
+                                            <>
+                                                <div
+                                                    draggable="false"
+                                                    style={{ fontSize: '40pt' }}
+                                                >
+                                                    {
+                                                        videoInfo.info
+                                                            .english_name
+                                                    }
+                                                </div>
+                                                {videoInfo.info.language ===
+                                                'English' ? null : (
+                                                    <div
+                                                        style={{
+                                                            fontSize: '20pt',
+                                                            margin: '0',
+                                                        }}
+                                                    >
+                                                        {
+                                                            videoInfo.info
+                                                                .original_name
+                                                        }
+                                                    </div>
+                                                )}
+                                            </>
+                                        ) : (
+                                            <img
+                                                draggable="false"
+                                                width="500px"
+                                                src={videoInfo.title}
+                                            ></img>
+                                        )}
+
+                                        <div
+                                            style={{
+                                                marginTop: '20px',
+                                                display: 'flex',
+                                            }}
+                                        >
+                                            <div>{videoInfo.info.year}</div>
+                                            <div>&nbsp;|&nbsp; </div>
+                                            <div>{`${parseInt(
+                                                videoInfo.info.duration / 60,
+                                            )}h ${
+                                                videoInfo.info.duration % 60
+                                            }m`}</div>
+                                            <div>&nbsp;|&nbsp; </div>
+                                            <div>
+                                                <img
+                                                    height="24px"
+                                                    src={getMovieRating(
+                                                        videoInfo.info.age,
+                                                    )}
+                                                ></img>
+                                            </div>
                                         </div>
-                                        <div style={{marginTop:"3px", display:"flex"}}>
-                                            <div >{videoInfo.info.country}</div>
-                                            <div >&nbsp;|&nbsp; </div>
+                                        <div
+                                            style={{
+                                                marginTop: '3px',
+                                                display: 'flex',
+                                            }}
+                                        >
+                                            <div>{videoInfo.info.country}</div>
+                                            <div>&nbsp;|&nbsp; </div>
                                             <div>{videoInfo.info.language}</div>
                                         </div>
-                                        <div  style={{marginTop:"20px"}}>
-                                        
-                                            <div >Director: {videoInfo.info.director}</div>
-                                            <div style={{marginTop:"3px"}}>Cast: {videoInfo.info.actors.join(', ')}</div>
-                                            <div style={{marginTop:"3px"}}>Genres: {videoInfo.info.genre.join(', ')}</div>
+                                        <div style={{ marginTop: '20px' }}>
+                                            <div>
+                                                Director:{' '}
+                                                {videoInfo.info.director}
+                                            </div>
+                                            <div style={{ marginTop: '3px' }}>
+                                                Cast:{' '}
+                                                {videoInfo.info.actors.join(
+                                                    ', ',
+                                                )}
+                                            </div>
+                                            <div style={{ marginTop: '3px' }}>
+                                                Genres:{' '}
+                                                {videoInfo.info.genre.join(
+                                                    ', ',
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -217,38 +297,48 @@ function App() {
                                                     </div>
                                                 )}
                                                 <div
-                                                    style={{ display: 'flex' }}
+                                                    style={{
+                                                        display: 'flex',
+                                                        fontSize: '10pt',
+                                                    }}
                                                 >
                                                     <div
                                                         style={{
                                                             margin:
                                                                 '0 0 20px 20px',
-                                                            fontSize: '10pt',
                                                         }}
                                                     >
                                                         {vdata.info.year}
+                                                        &nbsp;|&nbsp;
                                                     </div>
                                                     <div
                                                         style={{
                                                             margin:
-                                                                '0 0 20px 10px',
-                                                            fontSize: '10pt',
+                                                                '0 0 20px 0',
                                                         }}
                                                     >
-                                                        {vdata.info.age}
+                                                        <div
+                                                            style={{
+                                                                margin:
+                                                                    '0 0 20px 0',
+                                                            }}
+                                                        >{`${parseInt(
+                                                            vdata.info
+                                                                .duration / 60,
+                                                        )}h ${
+                                                            vdata.info
+                                                                .duration % 60
+                                                        }m`}</div>
                                                     </div>
-                                                    <div
-                                                        style={{
-                                                            margin:
-                                                                '0 0 20px 10px',
-                                                            fontSize: '10pt',
-                                                        }}
-                                                    >{`${parseInt(
-                                                        vdata.info.duration /
-                                                            60,
-                                                    )}h ${
-                                                        vdata.info.duration % 60
-                                                    }m`}</div>
+                                                    &nbsp;|&nbsp;
+                                                    <div>
+                                                        <img
+                                                            height="20px"
+                                                            src={getMovieRating(
+                                                                vdata.info.age,
+                                                            )}
+                                                        ></img>
+                                                    </div>
                                                 </div>
                                                 <div
                                                     style={{ display: 'flex' }}
@@ -275,7 +365,8 @@ function App() {
                                                             style={{
                                                                 paddingTop:
                                                                     '10px',
-                                                                paddingLeft:'10px',
+                                                                paddingLeft:
+                                                                    '10px',
                                                                 width: '20px',
                                                                 height: '20px',
                                                             }}
@@ -293,7 +384,8 @@ function App() {
                                                             console.log('')
                                                         }
                                                         style={{
-                                                            position: 'relative',
+                                                            position:
+                                                                'relative',
                                                             border:
                                                                 '2px solid white',
                                                             marginLeft: '20px',
@@ -308,7 +400,20 @@ function App() {
                                                             outline: 'none',
                                                         }}
                                                     >
-                                                        <div className="InfoButtonHover" ><div style={{marginTop:'8px', fontWeight:'bolder', fontSize:'14pt'}}>Add to My List</div></div>
+                                                        <div className="InfoButtonHover">
+                                                            <div
+                                                                style={{
+                                                                    marginTop:
+                                                                        '8px',
+                                                                    fontWeight:
+                                                                        'bolder',
+                                                                    fontSize:
+                                                                        '14pt',
+                                                                }}
+                                                            >
+                                                                Add to My List
+                                                            </div>
+                                                        </div>
                                                         <svg
                                                             style={{
                                                                 color: 'white',
@@ -331,7 +436,8 @@ function App() {
                                                             console.log('')
                                                         }
                                                         style={{
-                                                            position: 'relative',
+                                                            position:
+                                                                'relative',
                                                             marginLeft: '20px',
                                                             cursor: 'pointer',
                                                             backgroundColor:
@@ -344,7 +450,20 @@ function App() {
                                                             outline: 'none',
                                                         }}
                                                     >
-                                                        <div className="InfoButtonHover" ><div style={{marginTop:'8px', fontWeight:'bolder', fontSize:'14pt'}}>I like this</div></div>
+                                                        <div className="InfoButtonHover">
+                                                            <div
+                                                                style={{
+                                                                    marginTop:
+                                                                        '8px',
+                                                                    fontWeight:
+                                                                        'bolder',
+                                                                    fontSize:
+                                                                        '14pt',
+                                                                }}
+                                                            >
+                                                                I like this
+                                                            </div>
+                                                        </div>
                                                         <svg
                                                             style={{
                                                                 color: 'white',
@@ -367,7 +486,8 @@ function App() {
                                                             console.log('')
                                                         }
                                                         style={{
-                                                            position:'relative',
+                                                            position:
+                                                                'relative',
                                                             marginLeft: '20px',
                                                             cursor: 'pointer',
                                                             backgroundColor:
@@ -380,7 +500,20 @@ function App() {
                                                             outline: 'none',
                                                         }}
                                                     >
-                                                        <div className="InfoButtonHover" ><div style={{marginTop:'8px', fontWeight:'bolder', fontSize:'14pt'}}>Not for me</div></div>
+                                                        <div className="InfoButtonHover">
+                                                            <div
+                                                                style={{
+                                                                    marginTop:
+                                                                        '8px',
+                                                                    fontWeight:
+                                                                        'bolder',
+                                                                    fontSize:
+                                                                        '14pt',
+                                                                }}
+                                                            >
+                                                                Not for me
+                                                            </div>
+                                                        </div>
                                                         <svg
                                                             style={{
                                                                 color: 'white',
