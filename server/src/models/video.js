@@ -12,6 +12,10 @@ const VideoSchema = new Schema({
         type: String,
         default: 'https://2.bp.blogspot.com/-muVbmju-gkA/Vir94NirTeI/AAAAAAAAT9c/VoHzHZzQmR4/s1600/placeholder-image.jpg'
     },
+    title:{
+        type: String,
+        default: 'x'
+    }
 });
 
 

@@ -107,14 +107,16 @@ function App() {
                                     <div
                                         style={{
                                             position: 'absolute',
-                                            top: '500px',
+                                            top: '400px',
                                             left: '50px',
                                             color: 'white',
                                             textAlign:'left'
                                         }}
                                     >
-                                        <div draggable="false" style={{fontSize:"40pt"}}>{videoInfo.info.english_name}</div>
-                                        {videoInfo.info.language==='English'? null: (<div  style={{fontSize:"20pt", margin:"0"}}>{videoInfo.info.original_name}</div>)}
+                                        {videoInfo.title==="x" ? <><div draggable="false" style={{fontSize:"40pt"}}>{videoInfo.info.english_name}</div>
+                                        {videoInfo.info.language==='English'? null: (<div  style={{fontSize:"20pt", margin:"0"}}>{videoInfo.info.original_name}</div>)}</>: <img draggable="false" width="500px" src={videoInfo.title}></img>}
+                                        
+                                        
                                         
                                         <div style={{marginTop:"20px", display:"flex"}}>
                                         
