@@ -7,5 +7,6 @@ const video = new Router();
 // video.post('/login', video.login);
 video.get('/home', videoCtrl.home);
 // video.post('/logout', video.logout);
+video.post('/play', videoCtrl.play);
 
 export default video;
