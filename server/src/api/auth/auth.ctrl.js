@@ -101,3 +101,24 @@ export const logout = async (ctx) => {
     ctx.cookies.set('access_token');
     ctx.status = 204;
 };
+
+export const mylist = async (ctx) => {
+    console.log('mylist : receive data!');
+    const { user, videoInfo } = ctx.request.body;
+    const uid = user.data._id;
+    await User.addMyList(uid, videoInfo);
+};
+
+export const likeVideo = async (ctx) => {
+    console.log('likeVideo : receive data!');
+    const { user, videoInfo } = ctx.request.body;
+    const uid = user.data._id;
+    await User.addLikeVideo(uid, videoInfo);
+};
+
+export const dislikeVideo = async (ctx) => {
+    console.log('dislikeVideo : receive data!');
+    const { user, videoInfo } = ctx.request.body;
+    const uid = user.data._id;
+    await User.addDislikeVideo(uid, videoInfo);
+};

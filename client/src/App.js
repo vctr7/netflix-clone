@@ -78,7 +78,7 @@ function App() {
         
         setVideoInfo(vdata);
         setTurnOn(true);
-        axios.post("api/video/play", {vdata}).then((res) => {
+        axios.post("api/video/play", { vdata }).then((res) => {
             if (res.status === 200) {
                 console.log('increase');
             } else {
@@ -86,6 +86,43 @@ function App() {
             }
         });
     };
+
+    const addMyList = (videoInfo) =>{
+        if (user){
+            // console.log(user)
+            axios.post("api/auth/mylist", { user, videoInfo }).then((res) => {
+                if (res.status === 200) {
+                    console.log('');
+                } else {
+                    console.log('not error but problem');
+                }
+            });
+        }
+    }
+
+    const addLikeVideo = (videoInfo) =>{
+        if (user){
+            axios.post("api/auth/likeVideo", { user, videoInfo }).then((res) => {
+                if (res.status === 200) {
+                    console.log('');
+                } else {
+                    console.log('not error but problem');
+                }
+            });
+        }
+    }
+
+    const addDislikeVideo = (videoInfo) =>{
+        if (user){
+            axios.post("api/auth/dislikeVideo", { user, videoInfo }).then((res) => {
+                if (res.status === 200) {
+                    console.log('');
+                } else {
+                    console.log('not error but problem');
+                }
+            });
+        }
+    }
 
     const getMovieRating = (rating) => {
         if (rating === 'G') return G;
@@ -137,7 +174,7 @@ function App() {
                                                 )}
                                             </>
                                         ) : (
-                                            <img draggable="false" width="500px" src={videoInfo.title}/>
+                                            <img draggable="false" style={{maxWidth:"500px"}} src={videoInfo.title}/>
                                         )}
 
                                         <div style={{marginTop: '20px', display: 'flex'}}>
@@ -251,7 +288,7 @@ function App() {
                                                     </a>
                                                     <button
                                                         className="InfoButton"
-                                                        onClick={() => console.log('')}
+                                                        onClick={() => addMyList(vdata)}
                                                         style={{
                                                             position: 'relative',
                                                             border: '2px solid white',
@@ -283,7 +320,7 @@ function App() {
                                                     </button>
                                                     <button
                                                         className="InfoButton"
-                                                        onClick={() => console.log('')}
+                                                        onClick={() => addLikeVideo(vdata)}
                                                         style={{
                                                             position: 'relative',
                                                             marginLeft: '20px',
@@ -319,7 +356,7 @@ function App() {
                                                     </button>
                                                     <button
                                                         className="InfoButton"
-                                                        onClick={() => console.log('')}
+                                                        onClick={() => addDislikeVideo(vdata)}
                                                         style={{
                                                             position: 'relative',
                                                             marginLeft: '20px',

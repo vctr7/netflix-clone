@@ -37,7 +37,15 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    likedVideo:{
+    myList:{
+        type: Object,
+        default: {}
+    },
+    likeVideo:{
+        type: Object,
+        default: {}
+    },
+    dislikeVideo:{
         type: Object,
         default: {}
     },
@@ -52,6 +60,35 @@ UserSchema.methods.setPassword = async function (password) {
     const hash = await bcrypt.hash(password, 10);
     this.hashedPassword = hash;
 };
+
+// Add movie to myList
+UserSchema.statics.addMyList = function (uid, videoInfo) {
+    this.findByIdAndUpdate(uid, { $push: { myList: videoInfo } }, function (err) {
+        if (err) {
+            console.log('err');
+        }
+    });
+};
+
+// Add movie to likeList
+UserSchema.statics.addLikeVideo = function (uid, videoInfo) {
+    this.findByIdAndUpdate(uid, { $push: { likeVideo: videoInfo } }, function (err) {
+        if (err) {
+            console.log('err');
+        }
+    });
+};
+
+// Add movie to dislikeList
+UserSchema.statics.addDislikeVideo = function (uid, videoInfo) {
+    this.findByIdAndUpdate(uid, { $push: { dislikeVideo: videoInfo } }, function (err) {
+        if (err) {
+            console.log('err');
+        }
+    });
+};
+
+
 
 // Check password when login
 UserSchema.methods.checkPassword = async function (password) {
