@@ -52,6 +52,7 @@ function App() {
                 .get('/api/auth/check')
                 .then((res) => {
                     setUser(res);
+                    console.log(res)
                 })
                 .catch((err) => console.log(err));
         } catch (error) {
@@ -60,7 +61,6 @@ function App() {
     };
     useEffect(() => {
         loginState();
-        // console.log(user);
     }, [signal]);
 
 
@@ -75,7 +75,13 @@ function App() {
             stopVideo();
         }
         console.log('PLAY', vdata.v_url);
-        
+        axios.post("api/auth/watched", { user, vdata }).then((res) => {
+            if (res.status === 200) {
+                console.log('');
+            } else {
+                console.log('not error but problem');
+            }
+        });
         setVideoInfo(vdata);
         setTurnOn(true);
         axios.post("api/video/play", { vdata }).then((res) => {
@@ -89,7 +95,7 @@ function App() {
 
     const addMyList = (videoInfo) =>{
         if (user){
-            // console.log(user)
+            // console.log(user, videoInfo)
             axios.post("api/auth/mylist", { user, videoInfo }).then((res) => {
                 if (res.status === 200) {
                     console.log('');
@@ -97,6 +103,7 @@ function App() {
                     console.log('not error but problem');
                 }
             });
+            loginState();
         }
     }
 
@@ -262,23 +269,22 @@ function App() {
                                                 </div>
                                                 <div style={{ display: 'flex' }}>
                                                     <a
+                                                        className="InfoButton"
                                                         href="#"
+                                                        style={{backgroundColor:"white", width:'37px', height:'37px'}}
                                                         onClick={() => playVideo(vdata)}
-                                                        style={{
-                                                            marginLeft: '20px',
-                                                            cursor: 'pointer',
-                                                            backgroundColor: '#2a2a2a',
-                                                            height: '40px',
-                                                            width: '40px',
-                                                            objectFit: 'cover',
-                                                            borderRadius: '50%',
-                                                            border: 'none',
-                                                            outline: 'none',
-                                                        }}>
+                                                        >
+                                                        <div className="InfoButtonHover">
+                                                            <div style={{marginTop:'8px',fontWeight:'bolder',fontSize:'14pt',}}>
+                                                                Play
+                                                            </div>
+                                                        </div>
+                                                        <div className="TriHover" />
                                                         <svg
                                                             style={{
-                                                                paddingTop: '10px',
-                                                                paddingLeft: '10px',
+                                                                color:'black',
+                                                                paddingTop: '8px',
+                                                                paddingLeft: '8px',
                                                                 width: '20px',
                                                                 height: '20px',
                                                             }}
@@ -288,26 +294,27 @@ function App() {
                                                     </a>
                                                     <button
                                                         className="InfoButton"
-                                                        onClick={() => addMyList(vdata)}
-                                                        style={{
-                                                            position: 'relative',
-                                                            border: '2px solid white',
-                                                            marginLeft: '20px',
-                                                            cursor: 'pointer',
-                                                            backgroundColor: '#2a2a2a',
-                                                            height: '40px',
-                                                            width: '40px',
-                                                            objectFit: 'cover',
-                                                            borderRadius: '50%',
-                                                            border: 'none',
-                                                            outline: 'none',
-                                                        }}>
+                                                        onClick={() => addMyList(vdata)}>
                                                         <div className="InfoButtonHover">
                                                             <div style={{marginTop:'8px',fontWeight:'bolder',fontSize:'14pt',}}>
                                                                 Add to My List
                                                             </div>
                                                         </div>
-                                                        <svg
+                                                        <div className="TriHover" />
+
+                                                        {user.data.myList.find(elem => elem.v_url===vdata.v_url)
+                                                        ? <svg
+                                                            style={{
+                                                                color: 'white',
+                                                                paddingTop: '2px',
+                                                                width: '20px',
+                                                                height: '20px',
+                                                            }}
+                                                            viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M3.707 12.293l-1.414 1.414L8 19.414 21.707 5.707l-1.414-1.414L8 16.586z"></path>
+                                                        </svg>
+                                                        
+                                                        : <svg
                                                             style={{
                                                                 color: 'white',
                                                                 paddingTop: '2px',
@@ -317,32 +324,27 @@ function App() {
                                                             viewBox="0 0 24 24">
                                                             <path d="M13 11h8v2h-8v8h-2v-8H3v-2h8V3h2v8z" fill="currentColor"/>
                                                         </svg>
+                                                        }
+                                                        {/* <svg
+                                                            style={{
+                                                                color: 'white',
+                                                                paddingTop: '2px',
+                                                                width: '20px',
+                                                                height: '20px',
+                                                            }}
+                                                            viewBox="0 0 24 24">
+                                                            <path d="M13 11h8v2h-8v8h-2v-8H3v-2h8V3h2v8z" fill="currentColor"/>
+                                                        </svg> */}
                                                     </button>
                                                     <button
                                                         className="InfoButton"
-                                                        onClick={() => addLikeVideo(vdata)}
-                                                        style={{
-                                                            position: 'relative',
-                                                            marginLeft: '20px',
-                                                            cursor: 'pointer',
-                                                            backgroundColor: '#2a2a2a',
-                                                            height: '40px',
-                                                            width: '40px',
-                                                            objectFit: 'cover',
-                                                            borderRadius: '50%',
-                                                            border: 'none',
-                                                            outline: 'none',
-                                                        }}>
+                                                        onClick={() => addLikeVideo(vdata)}>
                                                         <div className="InfoButtonHover">
-                                                            <div
-                                                                style={{
-                                                                    marginTop: '8px',
-                                                                    fontWeight: 'bolder',
-                                                                    fontSize:'14pt',
-                                                                }}>
+                                                            <div style={{marginTop: '8px', fontWeight: 'bolder', fontSize:'14pt'}}>
                                                                 I like this
                                                             </div>
                                                         </div>
+                                                        <div className="TriHover" />
                                                         <svg
                                                             style={{
                                                                 color: 'white',
@@ -356,19 +358,7 @@ function App() {
                                                     </button>
                                                     <button
                                                         className="InfoButton"
-                                                        onClick={() => addDislikeVideo(vdata)}
-                                                        style={{
-                                                            position: 'relative',
-                                                            marginLeft: '20px',
-                                                            cursor: 'pointer',
-                                                            backgroundColor: '#2a2a2a',
-                                                            height: '40px',
-                                                            width: '40px',
-                                                            objectFit: 'cover',
-                                                            borderRadius: '50%',
-                                                            border: 'none',
-                                                            outline: 'none',
-                                                        }}>
+                                                        onClick={() => addDislikeVideo(vdata)}>
                                                         <div className="InfoButtonHover">
                                                             <div
                                                                 style={{
@@ -379,6 +369,7 @@ function App() {
                                                                 Not for me
                                                             </div>
                                                         </div>
+                                                        <div className="TriHover" />
                                                         <svg
                                                             style={{
                                                                 color: 'white',

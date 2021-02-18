@@ -49,7 +49,7 @@ const UserSchema = new Schema({
         type: Object,
         default: {}
     },
-    watchedVideo:{
+    recentlyWatched:{
         type: Object,
         default: {}
     }
@@ -62,8 +62,40 @@ UserSchema.methods.setPassword = async function (password) {
 };
 
 // Add movie to myList
-UserSchema.statics.addMyList = function (uid, videoInfo) {
-    this.findByIdAndUpdate(uid, { $push: { myList: videoInfo } }, function (err) {
+UserSchema.statics.addMyList = function (user, videoInfo) {
+    let check = false;
+    const uid = user.data._id;
+    if (user.data.myList.find(video => video.v_url===videoInfo.v_url)) check=true;
+    
+    console.log(check)
+    if(check){
+        this.findByIdAndUpdate(uid, { $pull: { myList: {_id: videoInfo._id} } }, function (err) {
+            if (err) {
+                console.log('err');
+            }
+        });
+
+    }
+    else{
+        this.findByIdAndUpdate(uid, { $push: { myList: videoInfo } }, function (err) {
+            if (err) {
+                console.log('err');
+            }
+        });
+    }
+    // console.log(user.data.myList)
+};
+
+// Add movie to recentlyWatched
+UserSchema.statics.addRecentlyWatched = function (uid, videoInfo) {
+    this.findByIdAndUpdate(uid, { $pull: { "recentlyWatched": { _id: videoInfo._id } } }, { safe: true, upsert: true },
+        function(err, node) {
+            if (err) {
+                console.log('err');
+            }
+        }
+    );
+    this.findByIdAndUpdate(uid, { $push: { recentlyWatched: videoInfo } }, function (err) {
         if (err) {
             console.log('err');
         }

@@ -92,6 +92,7 @@ export const check = async (ctx) => {
         ctx.status = 401;
         return;
     }
+    // console.log(user);
     const userinfo = await User.findByUserEmail(user.userId);
     ctx.body = userinfo;
 };
@@ -102,11 +103,19 @@ export const logout = async (ctx) => {
     ctx.status = 204;
 };
 
+export const watched = async (ctx) => {
+    console.log('watched : receive data!');
+    const { user, vdata } = ctx.request.body;
+    const uid = user.data._id;
+    await User.addRecentlyWatched(uid, vdata);
+};
+
 export const mylist = async (ctx) => {
     console.log('mylist : receive data!');
+    // console.log(ctx.request.body)
     const { user, videoInfo } = ctx.request.body;
     const uid = user.data._id;
-    await User.addMyList(uid, videoInfo);
+    await User.addMyList(user, videoInfo);
 };
 
 export const likeVideo = async (ctx) => {
