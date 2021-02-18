@@ -12,4 +12,5 @@ export const play = async (ctx) => {
     const video = ctx.request.body;
     const vid = video.vdata._id;
     await Video.increasePlayTime(vid);
+    ctx.status = 200;
 };

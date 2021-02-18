@@ -45,8 +45,9 @@ module.exports = {
         }),
     ],
     devServer: {
+        historyApiFallback: true,
         proxy: {
-            '/api': {
+            '/api/*': {
                 target: 'http://localhost:8795',
                 changeOrigin: true,
             },

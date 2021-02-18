@@ -31,7 +31,7 @@ function App() {
     };
 
     const fetchData = async () => {
-        const result = await axios
+        await axios
             .get('api/video/home')
             .then((res) => setVideoData(res.data))
             .catch((err) => console.log(err));
@@ -42,7 +42,7 @@ function App() {
     }, []);
 
     const signalListener = (data) => {
-        console.log(data);
+        // console.log(data);
         setSignal(data);
     };
 
@@ -52,7 +52,6 @@ function App() {
                 .get('/api/auth/check')
                 .then((res) => {
                     setUser(res);
-                    console.log(res)
                 })
                 .catch((err) => console.log(err));
         } catch (error) {
@@ -74,36 +73,36 @@ function App() {
             setTurnOn(false);
             stopVideo();
         }
-        console.log('PLAY', vdata.v_url);
-        axios.post("api/auth/watched", { user, vdata }).then((res) => {
+        // console.log('PLAY', vdata.v_url);
+        axios.post('api/auth/watched', { user, vdata }).then((res) => {
             if (res.status === 200) {
-                console.log('');
+                // console.log('');
             } else {
                 console.log('not error but problem');
             }
-        });
+        }).catch((err) => console.log(err));;
         setVideoInfo(vdata);
         setTurnOn(true);
         axios.post("api/video/play", { vdata }).then((res) => {
             if (res.status === 200) {
-                console.log('increase');
+                // console.log('increase');
             } else {
                 console.log('not error but problem');
             }
-        });
+        }).catch((err) => console.log(err));;
     };
 
     const addMyList = (videoInfo) =>{
         if (user){
-            // console.log(user, videoInfo)
             axios.post("api/auth/mylist", { user, videoInfo }).then((res) => {
                 if (res.status === 200) {
-                    console.log('');
+                    // console.log(res.status)
+                    loginState();
                 } else {
                     console.log('not error but problem');
                 }
             });
-            loginState();
+            
         }
     }
 
@@ -111,7 +110,7 @@ function App() {
         if (user){
             axios.post("api/auth/likeVideo", { user, videoInfo }).then((res) => {
                 if (res.status === 200) {
-                    console.log('');
+                    loginState();
                 } else {
                     console.log('not error but problem');
                 }
@@ -123,7 +122,7 @@ function App() {
         if (user){
             axios.post("api/auth/dislikeVideo", { user, videoInfo }).then((res) => {
                 if (res.status === 200) {
-                    console.log('');
+                    loginState();
                 } else {
                     console.log('not error but problem');
                 }
@@ -325,16 +324,6 @@ function App() {
                                                             <path d="M13 11h8v2h-8v8h-2v-8H3v-2h8V3h2v8z" fill="currentColor"/>
                                                         </svg>
                                                         }
-                                                        {/* <svg
-                                                            style={{
-                                                                color: 'white',
-                                                                paddingTop: '2px',
-                                                                width: '20px',
-                                                                height: '20px',
-                                                            }}
-                                                            viewBox="0 0 24 24">
-                                                            <path d="M13 11h8v2h-8v8h-2v-8H3v-2h8V3h2v8z" fill="currentColor"/>
-                                                        </svg> */}
                                                     </button>
                                                     <button
                                                         className="InfoButton"
@@ -345,7 +334,17 @@ function App() {
                                                             </div>
                                                         </div>
                                                         <div className="TriHover" />
-                                                        <svg
+                                                        {user.data.likeVideo.find(elem => elem.v_url===vdata.v_url) 
+                                                        ? <svg
+                                                            style={{
+                                                                color: 'white',
+                                                                paddingTop: '2px',
+                                                                width: '20px',
+                                                                height: '20px',
+                                                            }}
+                                                            viewBox="0 0 24 24">
+                                                            <path d="M19.583 20.488c0 1.055-.985 1.398-1.764 1.467l-5.798.023c-4.675 0-4.446-1.49-8.021-1.787v-7.173l2.544-1.444 3.094-5.592s.343-4.514.343-4.744c0 0 2.773-1.352 3.484 2.384.687 3.735.206 6.05.068 6.37h6.05c.802.092 1.788.482 1.788 1.559 0 1.031-.986 1.398-1.788 1.444l.62.023c.778.091 1.787.435 1.787 1.49 0 1.076-1.009 1.42-1.788 1.489l-1.214.023c.825.068 1.81.435 1.81 1.49 0 1.03-.985 1.42-1.81 1.466h-1.17c.78.092 1.765.458 1.765 1.512z" fill="currentColor"></path></svg>
+                                                        : <svg
                                                             style={{
                                                                 color: 'white',
                                                                 paddingTop: '2px',
@@ -355,6 +354,9 @@ function App() {
                                                             viewBox="0 0 24 24" >
                                                             <path d="M15.167 8.994h3.394l.068.023c1.56.138 2.867.987 2.867 2.73 0 .275-.046.527-.092.78.367.435.596.986.596 1.72 0 .963-.39 1.52-1.032 1.978.023.183.023.252.023.39 0 .963-.39 1.784-1.009 2.243.023.206.023.275.023.39 0 1.743-1.33 2.591-2.89 2.73L12.21 22c-2.04 0-3.05-.252-4.563-.895-.917-.39-1.353-.527-2.27-.619L4 20.371v-8.234l2.476-1.445 2.27-4.427c0-.046.085-1.552.253-4.52l.871-.389c.092-.069.275-.138.505-.184.664-.206 1.398-.252 2.132 0 1.261.436 2.064 1.537 2.408 3.258.142.829.226 1.695.26 2.564l-.008 2zm-4.42-2.246l-2.758 5.376L6 13.285v5.26c.845.113 1.44.3 2.427.72 1.37.58 2.12.735 3.773.735l4.816-.023c.742-.078.895-.3 1.015-.542.201-.4.201-.876 0-1.425.558-.184.917-.479 1.078-.883.182-.457.182-.966 0-1.528.601-.228.901-.64.901-1.238s-.202-1.038-.608-1.32c.23-.46.26-.892.094-1.294-.168-.404-.298-.627-1.043-.738l-.172-.015h-5.207l.095-2.09c.066-1.448-.009-2.875-.216-4.082-.216-1.084-.582-1.58-1.096-1.758-.259-.09-.546-.086-.876.014-.003.06-.081 1.283-.235 3.67z" fill="currentColor"/>
                                                         </svg>
+
+                                                        }
+                                                        
                                                     </button>
                                                     <button
                                                         className="InfoButton"
@@ -370,7 +372,19 @@ function App() {
                                                             </div>
                                                         </div>
                                                         <div className="TriHover" />
-                                                        <svg
+                                                        {user.data.dislikeVideo.find(elem => elem.v_url===vdata.v_url) 
+                                                        ? <svg 
+                                                            style={{
+                                                                color: 'white',
+                                                                paddingTop:'2px',
+                                                                width: '20px',
+                                                                height: '20px',
+                                                            }}
+                                                            viewBox="0 0 24 24">
+                                                            <path d="M4.417 3.512c0-1.055.985-1.398 1.764-1.467l5.798-.023c4.675 0 4.446 1.49 8.021 1.787v7.173l-2.544 1.444-3.094 5.592s-.343 4.514-.343 4.744c0 0-2.773 1.352-3.484-2.384-.687-3.735-.206-6.05-.068-6.37h-6.05c-.802-.092-1.788-.482-1.788-1.559 0-1.031.986-1.398 1.788-1.444l-.62-.023c-.778-.091-1.787-.435-1.787-1.49 0-1.076 1.009-1.42 1.788-1.489l1.214-.023c-.825-.068-1.81-.435-1.81-1.49 0-1.03.985-1.42 1.81-1.466h1.17c-.78-.092-1.765-.458-1.765-1.512z" fill="currentColor"></path>
+                                                        </svg>
+
+                                                        : <svg
                                                             style={{
                                                                 color: 'white',
                                                                 paddingTop:'2px',
@@ -380,6 +394,10 @@ function App() {
                                                             viewBox="0 0 24 24">
                                                             <path d="M8.833 15.006H5.44l-.068-.023c-1.56-.138-2.867-.987-2.867-2.73 0-.275.046-.527.092-.78C2.23 11.038 2 10.487 2 9.753c0-.963.39-1.52 1.032-1.978-.023-.183-.023-.252-.023-.39 0-.963.39-1.784 1.009-2.243-.023-.206-.023-.275-.023-.39 0-1.743 1.33-2.591 2.89-2.73L11.79 2c2.04 0 3.05.252 4.563.895.917.39 1.353.527 2.27.619L20 3.629v8.234l-2.476 1.445-2.27 4.427c0 .046-.085 1.552-.253 4.52l-.871.389c-.092.069-.275.138-.505.184-.664.206-1.398.252-2.132 0-1.261-.436-2.064-1.537-2.408-3.258a19.743 19.743 0 0 1-.26-2.564l.008-2zm4.42 2.246l2.758-5.376L18 10.715v-5.26c-.845-.113-1.44-.3-2.427-.72C14.203 4.156 13.453 4 11.8 4l-4.816.023c-.742.078-.895.3-1.015.542-.201.4-.201.876 0 1.425-.558.184-.917.479-1.078.883-.182.457-.182.966 0 1.528-.601.228-.901.64-.901 1.238s.202 1.038.608 1.32c-.23.46-.26.892-.094 1.294.168.404.298.627 1.043.738l.172.015h5.207l-.095 2.09c-.066 1.448.009 2.875.216 4.082.216 1.084.582 1.58 1.096 1.758.259.09.546.086.876-.014.003-.06.081-1.283.235-3.67z" fill="currentColor"/>
                                                         </svg>
+
+
+                                                        }
+                                                        
                                                     </button>
                                                 </div>
                                             </div>
@@ -452,7 +470,7 @@ function App() {
                                                     <path
                                                         d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
                                                         fill="white"
-                                                        fill-rule="evenodd"
+                                                        fillRule="evenodd"
                                                     ></path>
                                                 </svg>
                                             </button>
@@ -476,7 +494,7 @@ function App() {
                                                     <path
                                                         d="M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z"
                                                         fill="white"
-                                                        fill-rule="evenodd"
+                                                        fillRule="evenodd"
                                                     ></path>
                                                 </svg>
                                             </button>

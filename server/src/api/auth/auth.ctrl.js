@@ -108,26 +108,27 @@ export const watched = async (ctx) => {
     const { user, vdata } = ctx.request.body;
     const uid = user.data._id;
     await User.addRecentlyWatched(uid, vdata);
+    ctx.status = 200;
 };
 
 export const mylist = async (ctx) => {
     console.log('mylist : receive data!');
     // console.log(ctx.request.body)
     const { user, videoInfo } = ctx.request.body;
-    const uid = user.data._id;
     await User.addMyList(user, videoInfo);
+    ctx.status = 200;
 };
 
 export const likeVideo = async (ctx) => {
     console.log('likeVideo : receive data!');
     const { user, videoInfo } = ctx.request.body;
-    const uid = user.data._id;
-    await User.addLikeVideo(uid, videoInfo);
+    await User.addLikeVideo(user, videoInfo);
+    ctx.status = 200;
 };
 
 export const dislikeVideo = async (ctx) => {
     console.log('dislikeVideo : receive data!');
     const { user, videoInfo } = ctx.request.body;
-    const uid = user.data._id;
-    await User.addDislikeVideo(uid, videoInfo);
+    await User.addDislikeVideo(user, videoInfo);
+    ctx.status = 200;
 };
