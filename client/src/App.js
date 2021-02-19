@@ -16,10 +16,8 @@ import G from './img/general_audience.png';
 function App() {
     const [email, setEmail] = useState('');
     const [lever, setLever] = useState(false);
-
     const [user, setUser] = useState(null);
     const [signal, setSignal] = useState(null);
-
     const [videoData, setVideoData] = useState(null);
     const [videoInfo, setVideoInfo] = useState(null);
     const [turnOn, setTurnOn] = useState(false);

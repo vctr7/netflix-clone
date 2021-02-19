@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import netflixLogo from '../img/logo.png';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
 const Header = ({ path, logout }) => {
+    const [open, setOpen] = useState(false);
+    const modalEl = useRef();
+
+    const handleClickOutside = ({ target }) => {
+        if (open && !modalEl.current.contains(target)) setOpen(false);
+      };
+    
+    useEffect(() => {
+      window.addEventListener("click", handleClickOutside);
+      return () => {
+        window.removeEventListener("click", handleClickOutside);
+      };
+    }, [open]);
+
     return (
         <div>
             {path === '/success' ? (
@@ -16,6 +30,8 @@ const Header = ({ path, logout }) => {
                                 draggable="false"
                             />
                         </Link>
+
+                        <div style={{ display:"flex", justifyContent: 'space-between', width:"80vw"}}>
                         <nav className="PrimaryNavigation">
                             <ul style={{ display: 'flex', color: 'white',margin: '0 40px 0 40px',  padding: '0' }}>
                                 <li className="NavIndex">Home</li>
@@ -24,17 +40,22 @@ const Header = ({ path, logout }) => {
                                 <li className="NavIndex">My List</li>
                             </ul>
                         </nav>
-                        <nav className="SecondaryNavigation">
-                            <ul style={{ display: 'flex', color: 'white',margin: '0',  padding: '0' }}>
-                                <li className="NavIndex">icon</li>
-                                <li className="NavIndex"> icon</li>
-                                <li className="NavIndex">icon</li>
-                                <li className="NavIndex">icon</li>
-                                <div >
-                                    <button style={{cursor:'pointer', backgroundColor:'rgba( 255, 255, 255, 0)', border:'none', color:'white'}} onClick={logout}>Sign Out</button>
-                                </div>
+                        <nav className="SecondaryNavigation" style={{marginLeft:""}}>
+                            <ul style={{position:"relative", display: 'flex', color: 'white',margin: '0 40px 0 40px',  padding: '0' }}>
+                                <li className="NavIndex">
+                                    {open
+                                    ? <input style={{ position:"absolute", right:"0px", top:"0px",backgroundColor:'black', outline:'none', border: "1px solid white", width:"250px", height:'30px', color: 'white'}} ref={modalEl} placeholder="Titles, people, genres"/>
+                                    : <img style={{position:"absolute"}}onClick={()=> setOpen(true)} width="24px" height="24px"  src={"https://energetica.md/themes/drupal8_zymphonies_theme/images/search_button.png"}/>}
+                                </li>
+                                {/* <li className="NavIndex"> icon</li>
+                                <li className="NavIndex">icon</li> */}
+                                {/* <li className="NavIndex">icon</li> */}
+
+                                    <button className="NavIndex"  style={{ position:"absolute", left:"30px", width:"100px", cursor:'pointer', backgroundColor:'rgba( 255, 255, 255, 0)', border:'none', color:'white'}} onClick={logout}>Sign Out</button>
                             </ul>
                         </nav>
+                        </div>
+                        
                     </div>
                 </div>
             ) : (
