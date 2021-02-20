@@ -3,9 +3,15 @@ import netflixLogo from '../img/logo.png';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
-const Header = ({ path, logout }) => {
+const Header = ({ path, page }) => {
     const [open, setOpen] = useState(false);
     const modalEl = useRef();
+
+    const logout = () => {
+        axios.post('/api/auth/logout');
+        setUser(null);
+        console.log('log out');
+    };
 
     const handleClickOutside = ({ target }) => {
         if (open && !modalEl.current.contains(target)) setOpen(false);
@@ -34,10 +40,15 @@ const Header = ({ path, logout }) => {
                         <div style={{ display:"flex", justifyContent: 'space-between', width:"80vw"}}>
                         <nav className="PrimaryNavigation">
                             <ul style={{ display: 'flex', color: 'white',margin: '0 40px 0 40px',  padding: '0' }}>
-                                <li className="NavIndex">Home</li>
+                                <Link to="/">
+                                    {page===undefined ? <h4 className="NavIndex">Home</h4>:<li className="NavIndex">Home</li>}
+                                </Link>
                                 <li className="NavIndex"> TV Shows</li>
                                 <li className="NavIndex">Movies</li>
-                                <li className="NavIndex">My List</li>
+                                <Link to="/mylist">
+                                    {page==='MyList' ? <h4  className="NavIndex">My List</h4>:<li className="NavIndex">My List</li>}
+                                    
+                                </Link>
                             </ul>
                         </nav>
                         <nav className="SecondaryNavigation" style={{marginLeft:""}}>
