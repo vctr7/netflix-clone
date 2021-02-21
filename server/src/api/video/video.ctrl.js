@@ -1,10 +1,36 @@
 import Joi from 'joi';
 import Video from '../../models/video';
 
+
+export const movie = async (ctx) =>{
+    console.log('home : receive data!');
+
+    // console.log(ctx.query.page);
+    const page = Number(ctx.query.p)
+    const result = await Video.loadAll(page);
+    ctx.body = result;
+}
+
 export const home = async (ctx) => {
     console.log('home : receive data!');
-    const videoInfo = await Video.loadAll();
-    ctx.body = videoInfo;
+    let categories = [];
+    categories.push( {"TOP 12 🍿" : await Video.loadPopular()});
+    categories.push( {"Anime" : await Video.loadAnimation()});
+    categories.push( {"UK 🇬🇧" : await Video.loadBritain()});
+    categories.push( {"Marvel" : await Video.loadMarvel()});
+    categories.push( {"Japan 🇯🇵" : await Video.loadJapan()});
+    categories.push( {"HongKong 🇭🇰" : await Video.loadHK()});
+    categories.push( {"French Chic 🇫🇷" : await Video.loadFrance()});
+    categories.push( {"Sci-Fi" : await Video.loadSF()});
+    categories.push( {"90's" : await Video.load90()});
+    categories.push( {"Classic" : await Video.loadClassic()});
+    categories.push( {"Woody Allen" : await Video.loadWoodyAllen()});
+    categories.push( {"Series" : await Video.loadSeries()});
+    categories.push( {"Music" : await Video.loadMusic()});
+    categories.push( {"Romance" : await Video.loadRomance()});
+    categories.push( {"Hollywood" : await Video.loadHollywood()});
+
+    ctx.body = categories;
 };
 
 export const popular = async (ctx) => {

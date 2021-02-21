@@ -23,8 +23,13 @@ const VideoSchema = new Schema({
     },
 });
 
-VideoSchema.statics.loadAll = function () {
-    return this.find({}).sort({ v_url: 1 });
+VideoSchema.statics.loadAll = function (page) {
+    if (page===1) {
+        return this.find({}).sort({ v_url: 1 }).skip((page-1)*30).limit(30);
+    }
+    else {
+        return this.find({}).sort({ v_url: 1 }).skip((page-1)*12 + 30).limit(12);
+    }
 };
 
 VideoSchema.statics.loadPopular = function () {

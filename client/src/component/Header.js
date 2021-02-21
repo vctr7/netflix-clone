@@ -44,7 +44,10 @@ const Header = ({ path, page }) => {
                                     {page===undefined ? <h4 className="NavIndex">Home</h4>:<li className="NavIndex">Home</li>}
                                 </Link>
                                 <li className="NavIndex"> TV Shows</li>
-                                <li className="NavIndex">Movies</li>
+                                <Link to="/movie">
+                                    {page==='Movie' ? <h4  className="NavIndex">Movie</h4> : <li className="NavIndex">Movies</li>}
+                                </Link>
+                                
                                 <Link to="/mylist">
                                     {page==='MyList' ? <h4  className="NavIndex">My List</h4>:<li className="NavIndex">My List</li>}
                                     

@@ -4,6 +4,8 @@ import * as videoCtrl from './video.ctrl';
 const video = new Router();
 
 video.get('/home', videoCtrl.home);
+video.get('/movie', videoCtrl.movie);
+
 video.get('/popular', videoCtrl.popular);
 video.get('/anime', videoCtrl.anime);
 video.get('/hollywood', videoCtrl.hollywood);

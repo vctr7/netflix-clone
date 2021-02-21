@@ -9,6 +9,7 @@ import Video from './component/Video';
 import Login from './page/Login';
 import Register from './page/Register';
 import MyList from './page/MyList';
+import Movie from './page/Movie';
 import axios from 'axios';
 
 import R from './img/restricted.png';
@@ -20,83 +21,28 @@ function App() {
     const [lever, setLever] = useState(false);
     const [user, setUser] = useState(null);
     const [signal, setSignal] = useState(null);
-    const [videoData, setVideoData] = useState(null);
+    const [videoData, setVideoData] = useState([]);
     const [categories, setCategories] = useState(null);
 
     const [videoInfo, setVideoInfo] = useState(null);
     const [videoTurnOn, setVideoTurnOn] = useState(false);
 
+    const [fetching, setFetching] = useState(false);
+    // const [videoData, setVideoData]
 
     
     const fetchData = async () => {
-        await axios
-            .get('api/video/home')
-            .then((res) => setVideoData(res.data))
-            .catch((err) => console.log(err));
-
+        setFetching(true);
         const category = [];
         await axios
-            .get('api/video/popular')
-            .then((res) => category.push({"TOP 12 🍿":res.data}))
+            .get('api/video/home')
+            .then((res) => setCategories(res.data))
             .catch((err) => console.log(err));
-        await axios
-            .get('api/video/anime')
-            .then((res) => category.push({"Anime":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/hollywood')
-            .then((res) => category.push({"Hollywood":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/britain')
-            .then((res) => category.push({"UK 🇬🇧":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/marvel')
-            .then((res) => category.push({"Marvel":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/japan')
-            .then((res) => category.push({"Japan 🇯🇵":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/hongkong')
-            .then((res) => category.push({"HongKong 🇭🇰":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/france')
-            .then((res) => category.push({"French Chic 🇫🇷":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/scifi')
-            .then((res) => category.push({"Sci-Fi":res.data}))
-            .catch((err) => console.log(err));   
-        await axios
-            .get('api/video/year90')
-            .then((res) => category.push({"90's":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/classic')
-            .then((res) => category.push({"Classic":res.data}))
-            .catch((err) => console.log(err)); 
-        await axios
-            .get('api/video/woodyallen')
-            .then((res) => category.push({"Woody Allen":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/series')
-            .then((res) => category.push({"Series":res.data}))
-            .catch((err) => console.log(err));    
-        await axios
-            .get('api/video/music')
-            .then((res) => category.push({"Music":res.data}))
-            .catch((err) => console.log(err));
-        await axios
-            .get('api/video/romance')
-            .then((res) => category.push({"Romance":res.data}))
-            .catch((err) => console.log(err));    
+
+        
+        
         // console.log(category) 
-        setCategories(category);
+        // setCategories(category);
     };
 
     useEffect(() => {
@@ -718,6 +664,11 @@ function App() {
             <Route
                 path="/mylist"
                 render={() => <MyList user={user} playVideo={playVideo} stopVideo={stopVideo} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
+
+            </Route>
+            <Route
+                path="/movie"
+                render={() => <Movie user={user} playVideo={playVideo} stopVideo={stopVideo} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
 
             </Route>
         </div>
