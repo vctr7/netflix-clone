@@ -29,7 +29,7 @@ const Header = ({ path, page }) => {
             {path === '/success' ? (
                 <div className="Header" style={{ width:"100vw"}}>
                     <div style={{ display: 'flex', margin: '0 56px 18px 56px' }}>
-                        <Link to="/">
+                        <Link to="/home">
                             <img
                                 src={netflixLogo}
                                 width="90px"
@@ -40,8 +40,8 @@ const Header = ({ path, page }) => {
                         <div style={{ display:"flex", justifyContent: 'space-between', width:"80vw"}}>
                         <nav className="PrimaryNavigation">
                             <ul style={{ display: 'flex', color: 'white',margin: '0 40px 0 40px',  padding: '0' }}>
-                                <Link to="/">
-                                    {page===undefined ? <h4 className="NavIndex">Home</h4>:<li className="NavIndex">Home</li>}
+                                <Link to="/home">
+                                    {page==='Home'  ? <h4 className="NavIndex">Home</h4>:<li className="NavIndex">Home</li>}
                                 </Link>
                                 <li className="NavIndex"> TV Shows</li>
                                 <Link to="/movie">

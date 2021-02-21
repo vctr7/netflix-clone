@@ -1,54 +1,64 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import './MyList.css';
+import React, { useEffect, useState } from 'react';
+
+import Video from '../component/Video';
 import Header from '../component/Header';
 import axios from 'axios';
 
 const Movie = ({
     user,
-    playVideo,
-    stopVideo,
     addMyList,
     addLikeVideo,
     addDislikeVideo,
     getMovieRating,
 }) => {
-    const [fetching, setFetching] = useState(false);
+
+    const [videoInfo, setVideoInfo] = useState(null);
+    const [videoTurnOn, setVideoTurnOn] = useState(false);
     const [movies, setMovies] = useState([]);
     let pageNum = 2;
     let videoData = []
     
-    // 스크롤 이벤트 핸들러
+
     const handleScroll = () => {
         const scrollHeight = document.documentElement.scrollHeight;
         const scrollTop = document.documentElement.scrollTop;
         const clientHeight = document.documentElement.clientHeight;
         
-        if (scrollTop + clientHeight >= scrollHeight && fetching === false) {
-            moreFetchData();
+        if (scrollTop + clientHeight >= scrollHeight) {
+            moreFetch();
         }
     };
     const initialFetch = async () => {        
         await axios
            .get('api/video/movie', { params: { p: 1 } })
            .then((res) => {
-                videoData = [...videoData, ...res.data]
+               if (res.data===[]){
+
+               }
+               else{
+                    videoData = [...videoData, ...res.data]
+               }
+                
            })
            .catch((err) => console.log(err));
        setMovies(videoData)
    };
 
-    const moreFetchData = async () => {
-        setFetching(true);
-        
-        console.log(videoData, pageNum)
+    const moreFetch = async () => {
+
         await axios
            .get('api/video/movie', { params: { p: pageNum } })
            .then((res) => {
+               if(res.data){
                 videoData = [...videoData, ...res.data]
                 pageNum = pageNum + 1
+               }
+               else{
+                   console.log("asd")
+               }
+                
            })
            .catch((err) => console.log(err));
-       setFetching(false);
        setMovies(videoData)
    };
 
@@ -59,17 +69,59 @@ const Movie = ({
 
     useEffect(()=>{
         initialFetch();
+        window.scrollTo(0, 0);
     }, [])
     
+    const stopVideo = () => {
+        const video = document.getElementById('videoPlayer');
+        video.pause();
+    };
+
+    const playVideo = (vdata) => {
+        if (videoTurnOn) {
+            setVideoTurnOn(false);
+            stopVideo();
+        }
+        axios.post('api/auth/watched', { user, vdata }).then((res) => {
+            if (res.status === 200) {
+                // console.log('');
+            } else {
+                console.log('not error but problem');
+            }
+        }).catch((err) => console.log(err));;
+        setVideoInfo(vdata);
+        setVideoTurnOn(true);
+        axios.post("api/video/play", { vdata }).then((res) => {
+            if (res.status === 200) {
+                // console.log('increase');
+            } else {
+                console.log('not error but problem');
+            }
+        }).catch((err) => console.log(err));;
+    };
 
     return (
         <div className="MoviePage" style={{height:"110vh"}}>
-            <header
-                className="HeaderPlaying"
-                style={{ position: 'fixed', zIndex: '10' }}
-            >
-                <Header path="/success" page="Movie" />
-            </header>
+
+
+            {videoTurnOn ? (
+                <>
+                    <header
+                        className="HeaderPlaying"
+                        style={{ position: 'fixed', zIndex: '10' }}
+                    >
+                        <Header path="/success" page="Movie" />
+                    </header>
+                    <Video
+                        videoInfo={videoInfo}
+                        getMovieRating={getMovieRating}
+                    />
+                </>
+            ) : (
+                <header className="HeaderPlaying" style={{ position: 'fixed', zIndex: '10' }}>
+                    <Header style={{ backgroundColor: 'black' }} path="/success" page="Movie" />
+                </header>
+            )}
             <div>
                 {videoData === [] ? (
                     'Loading'

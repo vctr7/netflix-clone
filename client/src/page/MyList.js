@@ -1,29 +1,66 @@
 import React, { useEffect, useState } from 'react';
 import './MyList.css';
 import Header from '../component/Header';
+import Video from '../component/Video';
+
+import axios from 'axios';
 
 const MyList = ({
     user,
-    playVideo,
-    stopVideo,
     addMyList,
     addLikeVideo,
     addDislikeVideo,
     getMovieRating,
 }) => {
-    const [turnOn, setTurnOn] = useState(false);
-    // const [userInfo, setUserInfo] = useState(null);
-    // useEffect(()=>{
-    //     setUserInfo(user);
-    // }, [])
+
+    const [videoInfo, setVideoInfo] = useState(null);
+    const [videoTurnOn, setVideoTurnOn] = useState(false);
+
+    const stopVideo = () => {
+        const video = document.getElementById('videoPlayer');
+        video.pause();
+    };
+
+    const playVideo = (vdata) => {
+        if (videoTurnOn) {
+            setVideoTurnOn(false);
+            stopVideo();
+        }
+        axios.post('api/auth/watched', { user, vdata }).then((res) => {
+            if (res.status === 200) {
+                // console.log('');
+            } else {
+                console.log('not error but problem');
+            }
+        }).catch((err) => console.log(err));;
+        setVideoInfo(vdata);
+        setVideoTurnOn(true);
+        axios.post("api/video/play", { vdata }).then((res) => {
+            if (res.status === 200) {
+                // console.log('increase');
+            } else {
+                console.log('not error but problem');
+            }
+        }).catch((err) => console.log(err));;
+    };
+
     return (
         <div className="MyListPage">
-            <header
-                className="HeaderPlaying"
-                style={{ position: 'fixed', zIndex: '10' }}
-            >
-                <Header path="/success" page="MyList" />
-            </header>
+            {videoTurnOn ? (
+                <>
+                    <header
+                        className="HeaderPlaying"
+                        style={{ position: 'fixed', zIndex: '10' }}
+                    >
+                        <Header path="/success" page="MyList"/>
+                    </header>
+                    <Video videoInfo={videoInfo} getMovieRating={getMovieRating}/>
+                </>
+            ) : (
+                <header  style={{ position: 'fixed', zIndex: '10' }}>
+                    <Header style={{ backgroundColor: 'black' }} path="/success" page="MyList" />
+                </header>
+            )}
             <div
                 style={{
                     paddingTop: '100px',

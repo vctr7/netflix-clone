@@ -1,3 +1,4 @@
+import { func } from 'joi';
 import mongoose, { Schema } from 'mongoose';
 
 // Video's Schema
@@ -25,12 +26,13 @@ const VideoSchema = new Schema({
 
 VideoSchema.statics.loadAll = function (page) {
     if (page===1) {
-        return this.find({}).sort({ v_url: 1 }).skip((page-1)*30).limit(30);
+        return this.find({}).sort({ v_url: 1 }).skip(0).limit(30);
     }
     else {
-        return this.find({}).sort({ v_url: 1 }).skip((page-1)*12 + 30).limit(12);
+        return this.find({}).sort({ v_url: 1 }).skip((page - 2)*12 + 30).limit(12);
     }
 };
+
 
 VideoSchema.statics.loadPopular = function () {
     return this.find({playCount: {$gt:0}}).sort({ playCount: -1 }).limit(12);
