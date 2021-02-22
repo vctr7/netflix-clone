@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
-const Header = ({ path, page, search, setSearch }) => {
+const Header = ({ path, page, search, setSearch, setUser }) => {
     const [open, setOpen] = useState(false);
+
     const modalEl = useRef();
 
     const logout = () => {
+        console.log('log out');
         axios.post('/api/auth/logout');
         setUser(null);
-        console.log('log out');
+        
     };
 
     const handleClickOutside = ({ target }) => {
@@ -20,7 +22,8 @@ const Header = ({ path, page, search, setSearch }) => {
             setOpen(false);
             setSearch('');
         }
-      };
+    };
+
     
     useEffect(() => {
       window.addEventListener("click", handleClickOutside);
@@ -71,11 +74,9 @@ const Header = ({ path, page, search, setSearch }) => {
                                             />
                                     : <img style={{position:"absolute"}}onClick={()=> setOpen(true)} width="24px" height="24px"  src={"https://energetica.md/themes/drupal8_zymphonies_theme/images/search_button.png"}/>}
                                 </li>
-                                {/* <li className="NavIndex"> icon</li>
-                                <li className="NavIndex">icon</li> */}
-                                {/* <li className="NavIndex">icon</li> */}
-
+                                <Link to="/">
                                     <button className="NavIndex"  style={{ position:"absolute", left:"30px", width:"100px", cursor:'pointer', backgroundColor:'rgba( 255, 255, 255, 0)', border:'none', color:'white'}} onClick={logout}>Sign Out</button>
+                                </Link>
                             </ul>
                         </nav>
                         </div>

@@ -6,6 +6,7 @@ import Header from '../component/Header';
 
 const Home = ({
     user,
+    setUser,
     search,
     setSearch,
     searchResult,
@@ -108,11 +109,16 @@ const Home = ({
                         className="HeaderPlaying"
                         style={{ position: 'fixed', zIndex: '10' }}
                     >
-                        <Header path="/success" page="Home" />
+                        <Header path="/success" 
+                                page="Home"
+                                search={search}
+                                setSearch={setSearch}
+                                setUser={setUser} />
                     </header>
                     <Video
                         videoInfo={videoInfo}
                         getMovieRating={getMovieRating}
+                        
                     />
                 </>
             ) : (
@@ -123,6 +129,7 @@ const Home = ({
                         page="Home"
                         search={search}
                         setSearch={setSearch}
+                        setUser={setUser}
                     />
                 </header>
             )}

@@ -43,7 +43,7 @@ const Signin = ({signalListener}) => {
     return (
         <div>
             {isLogin ? (
-                <Redirect to="/" />
+                <Redirect to="/home" />
             ) : (
                 <div className="SigninWrapper">
                     <div className="SigninBox">

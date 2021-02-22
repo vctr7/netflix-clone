@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Movie = ({
     user,
+    setUser,
     search,
     setSearch,
     searchResult,
@@ -112,7 +113,7 @@ const Movie = ({
                         className="HeaderPlaying"
                         style={{ position: 'fixed', zIndex: '10' }}
                     >
-                        <Header path="/success" page="Movie" />
+                        <Header path="/success" page="Movie" search={search} setSearch={setSearch}  setUser={setUser} />
                     </header>
                     <Video
                         videoInfo={videoInfo}
@@ -121,7 +122,7 @@ const Movie = ({
                 </>
             ) : (
                 <header className="HeaderPlaying" style={{ position: 'fixed', zIndex: '10' }}>
-                    <Header style={{ backgroundColor: 'black' }} path="/success" page="Movie" search={search} setSearch={setSearch}/>
+                    <Header style={{ backgroundColor: 'black' }} path="/success" page="Movie" search={search} setSearch={setSearch} setUser={setUser}/>
                 </header>
             )}
 

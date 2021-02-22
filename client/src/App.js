@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Redirect } from 'react-router-dom';
 
 import Header from './component/Header';
 import Footer from './component/Footer';
@@ -10,7 +10,6 @@ import Register from './page/Register';
 import MyList from './page/MyList';
 import Movie from './page/Movie';
 import Home from './page/Home';
-import Search from './page/Search';
 
 import axios from 'axios';
 
@@ -25,6 +24,9 @@ function App() {
     const [signal, setSignal] = useState(null);
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState(null);
+
+    const [timer, setTimer] = useState(0);
+
 
     const signalListener = (data) => {
         setSignal(data);
@@ -93,7 +95,18 @@ function App() {
 
     useEffect(()=>{
         // console.log(search)
-        getSearch();
+        if(timer){
+            clearTimeout(timer);
+        }
+        const newTimer = setTimeout(async () => {
+            try {
+                getSearch();
+            } catch (e) {
+              console.error('error', e);
+            }
+          }, 500);
+          setTimer(newTimer);
+        
     }, [search])
 
     const getSearch = () =>{
@@ -242,22 +255,17 @@ function App() {
             />
             <Route
                 path="/home"
-                render={() => <Home user={user} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
+                render={() => <Home user={user} setUser={setUser} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
             </Route>
-
-            {/* <Route
-                path="/search"
-                render={() => <Search user={user} search={search} setSearch={setSearch} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
-            </Route> */}
 
             <Route
                 path="/mylist"
-                render={() => <MyList user={user} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
+                render={() => <MyList user={user} setUser={setUser} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
 
             </Route>
             <Route
                 path="/movie"
-                render={() => <Movie user={user} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
+                render={() => <Movie user={user} setUser={setUser} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
 
             </Route>
         </div>
