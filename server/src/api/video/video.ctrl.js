@@ -1,6 +1,15 @@
 import Joi from 'joi';
 import Video from '../../models/video';
 
+export const search = async (ctx) => {
+    console.log('search : receive data!');
+
+    const query = ctx.query.search;
+    // console.log(query);
+    const result = await Video.loadSearch(query);
+    ctx.body = result;
+}
+
 export const movie = async (ctx) => {
     console.log('home : receive data!');
 

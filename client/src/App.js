@@ -4,13 +4,14 @@ import { Route, Link } from 'react-router-dom';
 
 import Header from './component/Header';
 import Footer from './component/Footer';
-import Video from './component/Video';
 
 import Login from './page/Login';
 import Register from './page/Register';
 import MyList from './page/MyList';
 import Movie from './page/Movie';
 import Home from './page/Home';
+import Search from './page/Search';
+
 import axios from 'axios';
 
 import R from './img/restricted.png';
@@ -22,12 +23,10 @@ function App() {
     const [lever, setLever] = useState(false);
     const [user, setUser] = useState(null);
     const [signal, setSignal] = useState(null);
-
-    const [videoInfo, setVideoInfo] = useState(null);
-    const [videoTurnOn, setVideoTurnOn] = useState(false);
+    const [search, setSearch] = useState('');
+    const [searchResult, setSearchResult] = useState(null);
 
     const signalListener = (data) => {
-        // console.log(data);
         setSignal(data);
     };
 
@@ -43,38 +42,11 @@ function App() {
             console.log(error);
         }
     };
+
     useEffect(() => {
         loginState();
     }, [signal]);
 
-
-    const stopVideo = () => {
-        const video = document.getElementById('videoPlayer');
-        video.pause();
-    };
-
-    const playVideo = (vdata) => {
-        if (videoTurnOn) {
-            setVideoTurnOn(false);
-            stopVideo();
-        }
-        axios.post('api/auth/watched', { user, vdata }).then((res) => {
-            if (res.status === 200) {
-                // console.log('');
-            } else {
-                console.log('not error but problem');
-            }
-        }).catch((err) => console.log(err));;
-        setVideoInfo(vdata);
-        setVideoTurnOn(true);
-        axios.post("api/video/play", { vdata }).then((res) => {
-            if (res.status === 200) {
-                // console.log('increase');
-            } else {
-                console.log('not error but problem');
-            }
-        }).catch((err) => console.log(err));;
-    };
 
     const addMyList = (videoInfo) =>{
         if (user){
@@ -119,30 +91,37 @@ function App() {
         else return PG;
     };
 
+    useEffect(()=>{
+        // console.log(search)
+        getSearch();
+    }, [search])
+
+    const getSearch = () =>{
+        if(user){
+            axios
+                .get('api/video/search', {params:{search:search}})
+                .then((res) => {
+                    // console.log(res.data);
+                    setSearchResult(res.data);
+                })
+                .catch((err) => console.log(err))
+        }
+    }
+
     return (
         <div>
-            <Route path="/home" exact>
                 {user ? (
                     //Login
-                    <div style={{ backgroundColor:'#151515' }}>
-                        {videoTurnOn ? (
-                            <>
-                                <header
-                                    className="HeaderPlaying"
-                                    style={{position: 'fixed', zIndex: '10'}}>
-                                    <Header path="/success" />
-                                </header>
-                                <Video videoInfo={videoInfo} getMovieRating={getMovieRating}/>
-                            </>
-                        ) : (
-                            <header
-                                style={{position: 'fixed', zIndex: '10'}}>
-                                {/* <Header style={{ backgroundColor: 'black' }} path="/success"  /> */}
-                            </header>
-                        )}
+
+                    <div>
+                        <Route path="/home" exact> 
+                                <div style={{ backgroundColor:'#151515' }} />
+                        </Route>    
                     </div>
+                    
                 ) : (
                     //Not Login
+                    <Route path="/" exact>
                     <div className="Home" style={{ minHeight: '100vh' }}>
                         <Header path="/" />
                         <div className="Text">
@@ -250,8 +229,9 @@ function App() {
                             <Footer style={{ marginTop: '200px' }}></Footer>
                         </div>
                     </div>
+                    </Route>
                 )}
-            </Route>
+
             <Route
                 path="/login"
                 render={() => <Login signalListener={signalListener} />}
@@ -262,17 +242,22 @@ function App() {
             />
             <Route
                 path="/home"
-                render={() => <Home user={user} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
-
+                render={() => <Home user={user} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
             </Route>
+
+            {/* <Route
+                path="/search"
+                render={() => <Search user={user} search={search} setSearch={setSearch} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
+            </Route> */}
+
             <Route
                 path="/mylist"
-                render={() => <MyList user={user} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
+                render={() => <MyList user={user} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
 
             </Route>
             <Route
                 path="/movie"
-                render={() => <Movie user={user} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
+                render={() => <Movie user={user} search={search} setSearch={setSearch} searchResult={searchResult} addMyList={addMyList} addLikeVideo={addLikeVideo} addDislikeVideo={addDislikeVideo} getMovieRating={getMovieRating}/>}>
 
             </Route>
         </div>

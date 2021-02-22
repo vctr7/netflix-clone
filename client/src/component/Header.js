@@ -3,7 +3,9 @@ import netflixLogo from '../img/logo.png';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
-const Header = ({ path, page }) => {
+import axios from 'axios';
+
+const Header = ({ path, page, search, setSearch }) => {
     const [open, setOpen] = useState(false);
     const modalEl = useRef();
 
@@ -14,7 +16,10 @@ const Header = ({ path, page }) => {
     };
 
     const handleClickOutside = ({ target }) => {
-        if (open && !modalEl.current.contains(target)) setOpen(false);
+        if (open && !modalEl.current.contains(target)) {
+            setOpen(false);
+            setSearch('');
+        }
       };
     
     useEffect(() => {
@@ -58,7 +63,12 @@ const Header = ({ path, page }) => {
                             <ul style={{position:"relative", display: 'flex', color: 'white',margin: '0 40px 0 40px',  padding: '0' }}>
                                 <li className="NavIndex">
                                     {open
-                                    ? <input style={{ position:"absolute", right:"0px", top:"0px",backgroundColor:'black', outline:'none', border: "1px solid white", width:"250px", height:'30px', color: 'white'}} ref={modalEl} placeholder="Titles, people, genres"/>
+                                    ? <input style={{ position:"absolute", right:"0px", top:"0px",backgroundColor:'black', outline:'none', border: "1px solid white", width:"250px", height:'30px', color: 'white'}} 
+                                            ref={modalEl} 
+                                            placeholder="Titles, people, genres"
+                                            value={search}
+                                            onChange={(e)=>setSearch(e.target.value)}
+                                            />
                                     : <img style={{position:"absolute"}}onClick={()=> setOpen(true)} width="24px" height="24px"  src={"https://energetica.md/themes/drupal8_zymphonies_theme/images/search_button.png"}/>}
                                 </li>
                                 {/* <li className="NavIndex"> icon</li>
