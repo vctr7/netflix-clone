@@ -37,7 +37,7 @@ VideoSchema.statics.loadAll = function (page) {
 
 VideoSchema.statics.loadSearch = function (search) {
     if (search==='') return null;
-    
+
     return this.find({
         $or: [
             { 'info.english_name': new RegExp(search, 'i') },
@@ -45,6 +45,7 @@ VideoSchema.statics.loadSearch = function (search) {
             { 'info.actors': new RegExp(search, 'i') },
             { 'info.genre': new RegExp(search, 'i') },
             { 'info.country': new RegExp(search, 'i') },
+            { 'info.series': new RegExp(search, 'i') },
         ],
     });
 };

@@ -23,6 +23,7 @@ const MyList = ({
     const stopVideo = () => {
         const video = document.getElementById('videoPlayer');
         video.pause();
+        setVideoTurnOn(false);
     };
 
     const playVideo = (vdata) => {
@@ -58,7 +59,7 @@ const MyList = ({
                     >
                         <Header path="/success" page="MyList" search={search} setSearch={setSearch} setUser={setUser} />
                     </header>
-                    <Video videoInfo={videoInfo} getMovieRating={getMovieRating}/>
+                    <Video videoInfo={videoInfo} getMovieRating={getMovieRating} stopVideo={stopVideo} />
                 </>
             ) : (
                 <header  style={{ position: 'fixed', zIndex: '10' }}>

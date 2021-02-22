@@ -70,6 +70,7 @@ const Home = ({
     const stopVideo = () => {
         const video = document.getElementById('videoPlayer');
         video.pause();
+        setVideoTurnOn(false)
     };
 
     const playVideo = (vdata) => {
@@ -118,6 +119,7 @@ const Home = ({
                     <Video
                         videoInfo={videoInfo}
                         getMovieRating={getMovieRating}
+                        stopVideo={stopVideo}
                         
                     />
                 </>

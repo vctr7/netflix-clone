@@ -93,8 +93,7 @@ function App() {
         else return PG;
     };
 
-    useEffect(()=>{
-        // console.log(search)
+    useEffect(() => {
         if(timer){
             clearTimeout(timer);
         }
@@ -104,8 +103,8 @@ function App() {
             } catch (e) {
               console.error('error', e);
             }
-          }, 500);
-          setTimer(newTimer);
+          }, 600);
+        setTimer(newTimer);
         
     }, [search])
 

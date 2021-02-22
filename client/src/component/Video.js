@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
 
-const Video = ({videoInfo, getMovieRating}) => {
+const Video = ({ videoInfo, getMovieRating, stopVideo }) => {
     return (
         <div draggable="false" style={{ textAlign: 'center' }}>
             <video
@@ -17,6 +17,18 @@ const Video = ({videoInfo, getMovieRating}) => {
                 autoPlay
                 src={`http://localhost:8888${videoInfo.v_url}`}
             />
+            <div style={{
+                        textAlign:'left',
+                        position: "absolute",
+                        top:'100px',
+                        right: '100px',
+                        zIndex: '10',
+                    }} >
+                <img
+                    style={{width:"40px", height:"40px", cursor:'pointer'}}
+                    onClick={()=>stopVideo()}
+                    src={"https://www.biocom.org/wp-content/themes/biocom/img/mbricons/close-icon-white.png"} />
+            </div>
             <div
                 draggable="false"
                 style={{
