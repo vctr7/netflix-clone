@@ -103,7 +103,7 @@ const Home = ({
     };
 
     return (
-        <div className="MyListPage">
+        <div className="HomePage">
             {videoTurnOn ? (
                 <>
                     <header

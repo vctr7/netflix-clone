@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css';
+import X from '../img/videox.png'
 
 const Video = ({ videoInfo, getMovieRating, stopVideo }) => {
     return (
@@ -27,7 +28,7 @@ const Video = ({ videoInfo, getMovieRating, stopVideo }) => {
                 <img
                     style={{width:"40px", height:"40px", cursor:'pointer'}}
                     onClick={()=>stopVideo()}
-                    src={"https://www.biocom.org/wp-content/themes/biocom/img/mbricons/close-icon-white.png"} />
+                    src={X} />
             </div>
             <div
                 draggable="false"

@@ -64,7 +64,7 @@ export const home = async (ctx) => {
             break;
         }
         case 10: {
-            categories.push({ 'Woody Allen': await Video.loadWoodyAllen() });
+            categories.push({ 'Woody Allen 👓': await Video.loadWoodyAllen() });
             break;
         }
         case 11: {
@@ -86,25 +86,9 @@ export const home = async (ctx) => {
         }
 
         default: {
-            // categories.push({Finish: ["Finish"]});
             break;
         }
     }
-
-    //
-    // categories.push( {"UK 🇬🇧" : await Video.loadBritain()});
-    // categories.push( {"Marvel" : await Video.loadMarvel()});
-    // categories.push( {"Japan 🇯🇵" : await Video.loadJapan()});
-    // categories.push( {"HongKong 🇭🇰" : await Video.loadHK()});
-    // categories.push( {"French Chic 🇫🇷" : await Video.loadFrance()});
-    // categories.push( {"Sci-Fi" : await Video.loadSF()});
-    // categories.push( {"90's" : await Video.load90()});
-    // categories.push( {"Classic" : await Video.loadClassic()});
-    // categories.push( {"Woody Allen" : await Video.loadWoodyAllen()});
-    // categories.push( {"Series" : await Video.loadSeries()});
-    // categories.push( {"Music" : await Video.loadMusic()});
-    // categories.push( {"Romance" : await Video.loadRomance()});
-    // categories.push( {"Hollywood" : await Video.loadHollywood()});
 
     ctx.body = categories;
 };

@@ -124,13 +124,13 @@ function App() {
         <div>
                 {user ? (
                     //Login
-
                     <div>
+                        <Redirect to="/home" />
                         <Route path="/home" exact> 
                                 <div style={{ backgroundColor:'#151515' }} />
                         </Route>    
                     </div>
-                    
+
                 ) : (
                     //Not Login
                     <Route path="/" exact>
