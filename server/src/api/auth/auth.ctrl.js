@@ -1,5 +1,7 @@
 import Joi from 'joi';
 import User from '../../models/user';
+import sendFile from 'koa-sendfile';
+
 
 export const register = async (ctx) => {
     console.log('register : receive data!');
@@ -74,7 +76,6 @@ export const login = async (ctx) => {
         }
 
         ctx.body = user.serialize();
-
         const token = user.generateToken();
         ctx.cookies.set('access_token', token, {
             maxAge: 1000 * 60 * 60 * 24 * 7,
@@ -95,6 +96,7 @@ export const check = async (ctx) => {
     // console.log(user);
     const userinfo = await User.findByUserEmail(user.userId);
     ctx.body = userinfo;
+    
 };
 
 export const logout = async (ctx) => {

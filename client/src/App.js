@@ -34,9 +34,9 @@ function App() {
 
     const loginState = async () => {
         try {
-            await axios
-                .get('/api/auth/check')
+            await axios.get('api/auth/check')
                 .then((res) => {
+                    // console.log(res);
                     setUser(res);
                 })
                 .catch((err) => console.log(err));
