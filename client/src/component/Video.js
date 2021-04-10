@@ -14,10 +14,12 @@ const Video = ({ videoInfo, getMovieRating, stopVideo }) => {
                     maxHeight: '940px',
                 }}
                 id="videoPlayer"
-                controls
+                controls="true"
                 autoPlay
-                src={`http://localhost:8888${videoInfo.v_url}`}
-            />
+                playsInline
+            >
+                <source src={`http://192.168.219.109:8888${videoInfo.v_url}`} type="video/mp4"></source>
+            </video>
             <div style={{
                         textAlign:'left',
                         position: "absolute",

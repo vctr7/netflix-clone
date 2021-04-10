@@ -92,7 +92,8 @@ function App() {
         else if (rating === 'R') return R;
         else return PG;
     };
-
+    
+    //Debouncing
     useEffect(() => {
         if(timer){
             clearTimeout(timer);
@@ -123,13 +124,15 @@ function App() {
     return (
         <div>
                 {user ? (
+                    <Redirect to="/home" />
+
                     //Login
-                    <div>
-                        <Redirect to="/home" />
-                        <Route path="/home" exact> 
-                                <div style={{ backgroundColor:'#151515' }} />
-                        </Route>    
-                    </div>
+                    // <div>
+                        
+                        // <Route path="/home" exact> 
+                        //         <div style={{ backgroundColor:'#151515' }} />
+                        // </Route>
+                    // </div>
 
                 ) : (
                     //Not Login

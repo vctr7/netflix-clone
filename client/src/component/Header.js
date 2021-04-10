@@ -20,7 +20,7 @@ const Header = ({ path, page, search, setSearch, setUser }) => {
     const handleClickOutside = ({ target }) => {
         if (open && !modalEl.current.contains(target)) {
             setOpen(false);
-            setSearch('');
+            // setSearch('');
         }
     };
 
@@ -37,7 +37,7 @@ const Header = ({ path, page, search, setSearch, setUser }) => {
             {path === '/success' ? (
                 <div className="Header" style={{ width:"100vw"}}>
                     <div style={{ display: 'flex', margin: '0 56px 18px 56px' }}>
-                        <Link to="/home">
+                        <Link to="/home" onClick={() => setSearch('')}>
                             <img
                                 src={netflixLogo}
                                 width="90px"
@@ -48,15 +48,15 @@ const Header = ({ path, page, search, setSearch, setUser }) => {
                         <div style={{ display:"flex", justifyContent: 'space-between', width:"80vw"}}>
                         <nav className="PrimaryNavigation">
                             <ul style={{ display: 'flex', color: 'white',margin: '0 40px 0 40px',  padding: '0' }}>
-                                <Link to="/home">
+                                <Link to="/home" onClick={()=>setSearch('')}>
                                     {page==='Home'  ? <h4 className="NavIndex">Home</h4>:<li className="NavIndex">Home</li>}
                                 </Link>
                                 <li className="NavIndex"> TV Shows</li>
-                                <Link to="/movie">
+                                <Link to="/movie" onClick={()=>setSearch('')}>
                                     {page==='Movie' ? <h4  className="NavIndex">Movie</h4> : <li className="NavIndex">Movies</li>}
                                 </Link>
                                 
-                                <Link to="/mylist">
+                                <Link to="/mylist" onClick={()=>setSearch('')}>
                                     {page==='MyList' ? <h4  className="NavIndex">My List</h4>:<li className="NavIndex">My List</li>}
                                     
                                 </Link>
