@@ -1,7 +1,7 @@
 ## Netflix
 ![https://github.com/vctr7/netflix-clone/blob/master/overview/main.png?raw=true](https://github.com/vctr7/netflix-clone/blob/master/overview/main.png?raw=true)
 
-## Used Skills
+## Used Specifications
 - Login
 ![https://github.com/vctr7/netflix-clone/blob/master/overview/login.png?raw=true](https://github.com/vctr7/netflix-clone/blob/master/overview/login.png?raw=true)
 - Register
