@@ -6,7 +6,8 @@
 ![https://github.com/vctr7/netflix-clone/blob/master/overview/login.png?raw=true](https://github.com/vctr7/netflix-clone/blob/master/overview/login.png?raw=true)
 - Register
 ![https://github.com/vctr7/netflix-clone/blob/master/overview/4.png?raw=true](https://github.com/vctr7/netflix-clone/blob/master/overview/4.png?raw=true)
-- Infinite Scroll
+- [Infinite Scroll](https://drive.google.com/file/d/1k2kyJIsqjy21Nq1yUXn3zrUVfX6An7y6/view?usp=sharing)
+- [Streaming](https://drive.google.com/file/d/15YhIP8tls-5_RX0zoacNIwOdESQ3Qtqd/view?usp=sharing)
 - Debounce (typing delay)
 ![https://github.com/vctr7/netflix-clone/blob/master/overview/searchdebounce.gif?raw=true](https://github.com/vctr7/netflix-clone/blob/master/overview/searchdebounce.gif?raw=true)
 - Mylist
