@@ -3,7 +3,10 @@
 ## Used Skills
 - Infinite Scroll
 - Debounce (typing delay)
+![https://github.com/vctr7/netflix-clone/blob/master/overview/searchdebounce.gif?raw=true](https://github.com/vctr7/netflix-clone/blob/master/overview/searchdebounce.gif?raw=true)
 - React Hook
+
+[overview videos](https://drive.google.com/drive/folders/167PenUAr3xdfL_ccGouGtlOtiNY3T6Rp)
 
 ## Specification
 
